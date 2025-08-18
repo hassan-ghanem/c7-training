@@ -1,0 +1,105 @@
+{
+  "components": [
+    {
+      "label": "Employee Name",
+      "key": "employeeName",
+      "type": "textfield",
+      "validate": {
+        "required": true
+      },
+      "id": "Field_0dfcg2k",
+      "layout": {
+        "row": "Row_0fyz32s"
+      }
+    },
+    {
+      "label": "Department",
+      "key": "department",
+      "type": "textfield",
+      "id": "Field_0eyprlc",
+      "layout": {
+        "row": "Row_19kcfd9"
+      }
+    },
+    {
+      "label": "Leave Type",
+      "values": [
+        {
+          "label": "Annual Leave",
+          "value": "annual"
+        },
+        {
+          "label": "Sick Leave",
+          "value": "sick"
+        }
+      ],
+      "key": "leaveType",
+      "type": "select",
+      "options": [
+        {
+          "label": "Annual Leave",
+          "value": "annual"
+        },
+        {
+          "label": "Sick Leave",
+          "value": "sick"
+        },
+        {
+          "label": "Unpaid Leave",
+          "value": "unpaid"
+        }
+      ],
+      "validate": {
+        "required": true
+      },
+      "id": "Field_00f38br",
+      "layout": {
+        "row": "Row_09q08pu"
+      }
+    },
+    {
+      "subtype": "date",
+      "key": "startDate",
+      "label": "Start Date",
+      "type": "datetime",
+      "validate": {
+        "required": true
+      },
+      "id": "Field_16ggyay",
+      "layout": {
+        "row": "Row_1gsp7be"
+      }
+    },
+    {
+      "subtype": "date",
+      "key": "endDate",
+      "label": "End Date",
+      "type": "datetime",
+      "validate": {
+        "required": true
+      },
+      "id": "Field_1r43iwu",
+      "layout": {
+        "row": "Row_1dupsve"
+      }
+    },
+    {
+      "label": "Reason",
+      "key": "reason",
+      "type": "textarea",
+      "id": "Field_1dwkxmr",
+      "layout": {
+        "row": "Row_1e5hlwe"
+      }
+    }
+  ],
+  "type": "default",
+  "id": "requester_form",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.34.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 18
+}

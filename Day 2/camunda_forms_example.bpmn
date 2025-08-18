@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_042w1ax" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:collaboration id="Collaboration_1yfhzw2">
+    <bpmn:participant id="SimpleApprovalProcessParticipant" name="Simple Approval Process" processRef="camunda_forms_example" />
+  </bpmn:collaboration>
+  <bpmn:process id="camunda_forms_example" name="camunda_forms_example" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:laneSet id="LaneSet_1101hk3">
+      <bpmn:lane id="RequesterLane" name="Requester">
+        <bpmn:flowNodeRef>RequestSubmittedStartEvent</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UpdateInfoTask</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="ReviewerLane" name="Reviewer">
+        <bpmn:flowNodeRef>ReviewerApprovalTask</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_05ushm1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>RequestApprovedEndEvent</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>RequestRejectedEndEvent</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="RequestSubmittedStartEvent" name="Request Submitted" camunda:formKey="camunda-forms:deployment:requester_form.form">
+      <bpmn:outgoing>Flow_0eozf1n</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="ReviewerApprovalTask" name="Reviewer Approval" camunda:formKey="camunda-forms:deployment:reviewer_form.form" camunda:assignee="demo">
+      <bpmn:incoming>Flow_0eozf1n</bpmn:incoming>
+      <bpmn:incoming>Flow_0fme5c5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0c5llv8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_05ushm1" default="ApprovedSequenceFlow">
+      <bpmn:incoming>Flow_0c5llv8</bpmn:incoming>
+      <bpmn:outgoing>ReturnedSequenceFlow</bpmn:outgoing>
+      <bpmn:outgoing>ApprovedSequenceFlow</bpmn:outgoing>
+      <bpmn:outgoing>RejectedSequenceFlow</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="RequestApprovedEndEvent" name="Request Approved">
+      <bpmn:incoming>ApprovedSequenceFlow</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="RequestRejectedEndEvent" name="Request Rejected">
+      <bpmn:incoming>RejectedSequenceFlow</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0eozf1n" sourceRef="RequestSubmittedStartEvent" targetRef="ReviewerApprovalTask" />
+    <bpmn:sequenceFlow id="Flow_0fme5c5" sourceRef="UpdateInfoTask" targetRef="ReviewerApprovalTask" />
+    <bpmn:sequenceFlow id="Flow_0c5llv8" sourceRef="ReviewerApprovalTask" targetRef="Gateway_05ushm1" />
+    <bpmn:sequenceFlow id="ReturnedSequenceFlow" name="Returned" sourceRef="Gateway_05ushm1" targetRef="UpdateInfoTask">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{reviewerDecision eq 'returned'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="ApprovedSequenceFlow" name="Approved" sourceRef="Gateway_05ushm1" targetRef="RequestApprovedEndEvent" />
+    <bpmn:sequenceFlow id="RejectedSequenceFlow" name="Rejected" sourceRef="Gateway_05ushm1" targetRef="RequestRejectedEndEvent">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{reviewerDecision eq 'rejected'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="UpdateInfoTask" name="Update Info" camunda:formKey="camunda-forms:deployment:requester_form.form" camunda:assignee="demo">
+      <bpmn:incoming>ReturnedSequenceFlow</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fme5c5</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1yfhzw2">
+      <bpmndi:BPMNShape id="Participant_1yzt44s_di" bpmnElement="SimpleApprovalProcessParticipant" isHorizontal="true">
+        <dc:Bounds x="160" y="55" width="820" height="533" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0hu221s_di" bpmnElement="ReviewerLane" isHorizontal="true">
+        <dc:Bounds x="190" y="305" width="790" height="283" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_15gno1q_di" bpmnElement="RequesterLane" isHorizontal="true">
+        <dc:Bounds x="190" y="55" width="790" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="RequestSubmittedStartEvent">
+        <dc:Bounds x="242" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="235" y="205" width="50" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cqand3_di" bpmnElement="ReviewerApprovalTask">
+        <dc:Bounds x="460" y="360" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_05ushm1_di" bpmnElement="Gateway_05ushm1" isMarkerVisible="true">
+        <dc:Bounds x="655" y="375" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0qe58t7_di" bpmnElement="RequestApprovedEndEvent">
+        <dc:Bounds x="832" y="382" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="827" y="425" width="47" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1cr4be9_di" bpmnElement="RequestRejectedEndEvent">
+        <dc:Bounds x="832" y="462" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="806" y="505" width="88" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00k8i9u_di" bpmnElement="UpdateInfoTask">
+        <dc:Bounds x="800" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0eozf1n_di" bpmnElement="Flow_0eozf1n">
+        <di:waypoint x="278" y="180" />
+        <di:waypoint x="369" y="180" />
+        <di:waypoint x="369" y="400" />
+        <di:waypoint x="460" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fme5c5_di" bpmnElement="Flow_0fme5c5">
+        <di:waypoint x="850" y="140" />
+        <di:waypoint x="850" y="80" />
+        <di:waypoint x="510" y="80" />
+        <di:waypoint x="510" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0c5llv8_di" bpmnElement="Flow_0c5llv8">
+        <di:waypoint x="560" y="400" />
+        <di:waypoint x="655" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1p7ssq1_di" bpmnElement="ReturnedSequenceFlow">
+        <di:waypoint x="680" y="375" />
+        <di:waypoint x="680" y="180" />
+        <di:waypoint x="800" y="180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="687" y="344" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0o23aro_di" bpmnElement="ApprovedSequenceFlow">
+        <di:waypoint x="705" y="400" />
+        <di:waypoint x="832" y="400" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="736" y="382" width="47" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_163pa31_di" bpmnElement="RejectedSequenceFlow">
+        <di:waypoint x="680" y="425" />
+        <di:waypoint x="680" y="480" />
+        <di:waypoint x="832" y="480" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="738" y="463" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

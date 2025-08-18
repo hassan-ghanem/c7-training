@@ -1,0 +1,132 @@
+{
+  "components": [
+    {
+      "label": "Employee Name",
+      "key": "employeeName",
+      "type": "textfield",
+      "validate": {
+        "required": true
+      },
+      "id": "Field_03iddjt",
+      "disabled": true,
+      "layout": {
+        "row": "Row_11e5uay"
+      }
+    },
+    {
+      "label": "Department",
+      "key": "department",
+      "type": "textfield",
+      "id": "Field_1wpafjf",
+      "disabled": true,
+      "layout": {
+        "row": "Row_0gfasyu"
+      }
+    },
+    {
+      "label": "Leave Type",
+      "values": [
+        {
+          "label": "Value",
+          "value": "value"
+        }
+      ],
+      "key": "leaveType",
+      "type": "select",
+      "options": [
+        {
+          "label": "Annual Leave",
+          "value": "annual"
+        },
+        {
+          "label": "Sick Leave",
+          "value": "sick"
+        },
+        {
+          "label": "Unpaid Leave",
+          "value": "unpaid"
+        }
+      ],
+      "validate": {
+        "required": true
+      },
+      "id": "Field_0ix7et0",
+      "disabled": true,
+      "layout": {
+        "row": "Row_1cddwuf"
+      }
+    },
+    {
+      "subtype": "date",
+      "key": "startDate",
+      "label": "Start Date",
+      "type": "datetime",
+      "validate": {
+        "required": true
+      },
+      "id": "Field_11zwbfd",
+      "disabled": true,
+      "layout": {
+        "row": "Row_0wz6g4n"
+      }
+    },
+    {
+      "subtype": "date",
+      "key": "endDate",
+      "label": "End Date",
+      "type": "datetime",
+      "validate": {
+        "required": true
+      },
+      "id": "Field_1gi0b1z",
+      "disabled": true,
+      "layout": {
+        "row": "Row_07s2cl1"
+      }
+    },
+    {
+      "label": "Reason",
+      "key": "reason",
+      "type": "textarea",
+      "id": "Field_127r3kz",
+      "disabled": true,
+      "layout": {
+        "row": "Row_15chitr"
+      }
+    },
+    {
+      "label": "Action",
+      "values": [
+        {
+          "label": "Approve",
+          "value": "approved"
+        },
+        {
+          "label": "Reject",
+          "value": "rejected"
+        },
+        {
+          "label": "Return",
+          "value": "returned"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_1w8ajeq",
+        "columns": null
+      },
+      "id": "Field_0kmzqh7",
+      "key": "reviewerDecision",
+      "readonly": false
+    }
+  ],
+  "type": "default",
+  "id": "reviewer_form",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.34.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 18
+}

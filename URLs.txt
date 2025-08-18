@@ -1,0 +1,52 @@
+DAY 1
+https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/
+https://artifacts.camunda.com/ui/native/camunda-bpm/org/camunda/bpm/camunda-engine-rest-openapi/7.23.0/
+
+https://jdk.java.net/archive/
+https://www.oracle.com/sa/java/technologies/downloads/#java21
+
+https://docs.camunda.org/manual/latest/introduction/architecture/
+https://docs.camunda.org/manual/latest/reference/bpmn20/
+https://camunda.com/bpmn/reference/
+
+https://github.com/hassan-ghanem/camunda-user-group-SA
+
+https://camunda.com/blog/2022/02/moving-from-embedded-to-remote-workflow-engines/
+https://github.com/camunda-community-hub/camunda-platform-7-rest-client-java
+
+
+DAY 2
+https://docs.camunda.org/manual/latest/user-guide/process-engine/variables/
+https://docs.camunda.org/manual/latest/webapps/tasklist/task-lifecycle/
+https://docs.camunda.org/manual/latest/user-guide/process-engine/external-tasks/
+https://docs.camunda.io/docs/components/best-practices/architecture/extending-human-task-management-c7/#implementing-a-custom-processtask-info-entity
+https://docs.camunda.org/manual/latest/user-guide/process-engine/delegation-code/#execution-listener
+https://docs.camunda.org/manual/latest/user-guide/process-engine/delegation-code/#task-listener
+
+DAY 3
+https://github.com/TechnoBerry/camunda-worker-dotnet
+https://github.com/TechnoBerry/camunda-worker-dotnet/blob/master/samples/SampleCamundaWorker/Handlers/SayHelloHandler.cs
+
+
+DAY 5
+https://docs.camunda.io/docs/components/best-practices/development/understanding-transaction-handling-c7/
+https://camunda.com/blog/2019/10/job-executor-what-is-going-on-in-my-process-engine/
+https://docs.camunda.org/manual/latest/user-guide/process-engine/the-job-executor/
+
+-------------------------------------
+Enable the H2 Console in Spring Boot
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+
+http://localhost:8080/h2-console
+-------------------------------------
+
+https://docs.camunda.org/manual/latest/reference/rest/overview/authentication/
+https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#authentication
+

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0z2n3i7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="transient_variable_example" name="transient_variable_example" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="JavaScript">var Variables = org.camunda.bpm.engine.variable.Variables;
+
+var testValue = Variables.stringValue("Test", true);
+
+execution.setVariable("transient_variable", testValue);</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1c7z00g</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1c7z00g" sourceRef="StartEvent_1" targetRef="Task1Task" />
+    <bpmn:scriptTask id="Task1Task" name="Task 1" scriptFormat="JavaScript">
+      <bpmn:incoming>Flow_1c7z00g</bpmn:incoming>
+      <bpmn:outgoing>Flow_0u4f0cc</bpmn:outgoing>
+      <bpmn:script>var System = java.lang.System;
+
+System.out.println("transient_variable: " + execution.getVariable("transient_variable"));</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0u4f0cc" sourceRef="Task1Task" targetRef="Task2Task" />
+    <bpmn:userTask id="Task2Task" name="Task 2">
+      <bpmn:incoming>Flow_0u4f0cc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0a8ijjc</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_0phy25y">
+      <bpmn:incoming>Flow_0a8ijjc</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0a8ijjc" sourceRef="Task2Task" targetRef="Event_0phy25y" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="transient_variable_example">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03x6194_di" bpmnElement="Task1Task">
+        <dc:Bounds x="270" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18eu3lb_di" bpmnElement="Task2Task">
+        <dc:Bounds x="430" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0phy25y_di" bpmnElement="Event_0phy25y">
+        <dc:Bounds x="592" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1c7z00g_di" bpmnElement="Flow_1c7z00g">
+        <di:waypoint x="218" y="120" />
+        <di:waypoint x="270" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u4f0cc_di" bpmnElement="Flow_0u4f0cc">
+        <di:waypoint x="370" y="120" />
+        <di:waypoint x="430" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a8ijjc_di" bpmnElement="Flow_0a8ijjc">
+        <di:waypoint x="530" y="120" />
+        <di:waypoint x="592" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
