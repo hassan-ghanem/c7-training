@@ -27,8 +27,12 @@
       "label": "Leave Type",
       "values": [
         {
-          "label": "Value",
-          "value": "value"
+          "label": "Annual Leave",
+          "value": "annual"
+        },
+        {
+          "label": "Sick Leave",
+          "value": "sick"
         }
       ],
       "key": "leaveType",
