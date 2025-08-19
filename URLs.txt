@@ -22,6 +22,7 @@ https://docs.camunda.org/manual/latest/user-guide/process-engine/external-tasks/
 https://docs.camunda.io/docs/components/best-practices/architecture/extending-human-task-management-c7/#implementing-a-custom-processtask-info-entity
 https://docs.camunda.org/manual/latest/user-guide/process-engine/delegation-code/#execution-listener
 https://docs.camunda.org/manual/latest/user-guide/process-engine/delegation-code/#task-listener
+https://camunda.com/blog/2024/01/camunda-forms-features-you-dont-know/
 
 DAY 3
 https://github.com/TechnoBerry/camunda-worker-dotnet
