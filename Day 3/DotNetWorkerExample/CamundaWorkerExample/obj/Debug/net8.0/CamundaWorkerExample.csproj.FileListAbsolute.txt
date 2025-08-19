@@ -1,0 +1,108 @@
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.csproj.AssemblyReference.cache
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.AssemblyInfoInputs.cache
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.AssemblyInfo.cs
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.csproj.CoreCompileInputs.cache
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\CamundaWorkerExample.exe
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\CamundaWorkerExample.deps.json
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\CamundaWorkerExample.runtimeconfig.json
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\CamundaWorkerExample.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\CamundaWorkerExample.pdb
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Camunda.Worker.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.CommandLine.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.UserSecrets.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Hosting.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Http.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.Configuration.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.Console.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.Debug.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.EventLog.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.EventSource.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\System.Diagnostics.EventLog.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\System.IO.Pipelines.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\System.Text.Json.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaW.1E833DA4.Up2Date
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\refint\CamundaWorkerExample.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.pdb
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.genruntimeconfig.cache
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\ref\CamundaWorkerExample.dll
+C:\Users\hassa\Documents\augment-projects\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\appsettings.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\appsettings.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\CamundaWorkerExample.exe
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\CamundaWorkerExample.deps.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\CamundaWorkerExample.runtimeconfig.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\CamundaWorkerExample.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\CamundaWorkerExample.pdb
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Camunda.Worker.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.CommandLine.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Configuration.UserSecrets.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Hosting.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Http.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.Configuration.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.Console.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.Debug.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.EventLog.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.EventSource.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\System.Diagnostics.EventLog.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\System.IO.Pipelines.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\System.Text.Json.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.csproj.AssemblyReference.cache
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.AssemblyInfoInputs.cache
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.AssemblyInfo.cs
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.csproj.CoreCompileInputs.cache
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaW.1E833DA4.Up2Date
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\refint\CamundaWorkerExample.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.pdb
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\CamundaWorkerExample.genruntimeconfig.cache
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetWorkerExample\CamundaWorkerExample\obj\Debug\net8.0\ref\CamundaWorkerExample.dll
