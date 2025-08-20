@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0f4or21" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="error_event_main_process" name="error_event_main_process" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_01bskkx</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_01bskkx" sourceRef="StartEvent_1" targetRef="CallSubProcessCallActivity" />
+    <bpmn:callActivity id="CallSubProcessCallActivity" name="Call Sub-Process" calledElement="error_event_called_process">
+      <bpmn:incoming>Flow_01bskkx</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hg9nvc</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:boundaryEvent id="Event_1f4snr9" attachedToRef="CallSubProcessCallActivity">
+      <bpmn:outgoing>Flow_1b15uoo</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0swbk03" errorRef="Error_00nu4fk" camunda:errorCodeVariable="errorCode" camunda:errorMessageVariable="errorMsg" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1b15uoo" sourceRef="Event_1f4snr9" targetRef="ErrorIdentifiedTask" />
+    <bpmn:endEvent id="Event_008idin">
+      <bpmn:incoming>Flow_000a6qj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0hg9nvc" sourceRef="CallSubProcessCallActivity" targetRef="Task1Task" />
+    <bpmn:sequenceFlow id="Flow_000a6qj" sourceRef="Task1Task" targetRef="Event_008idin" />
+    <bpmn:userTask id="Task1Task" name="Task 1">
+      <bpmn:incoming>Flow_0hg9nvc</bpmn:incoming>
+      <bpmn:outgoing>Flow_000a6qj</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="ErrorIdentifiedTask" name="Error Identified">
+      <bpmn:incoming>Flow_1b15uoo</bpmn:incoming>
+      <bpmn:outgoing>Flow_07mzn8k</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_0zoekos">
+      <bpmn:incoming>Flow_07mzn8k</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_07mzn8k" sourceRef="ErrorIdentifiedTask" targetRef="Event_0zoekos" />
+  </bpmn:process>
+  <bpmn:error id="Error_00nu4fk" name="Called Process Error" errorCode="CALLED_PROCESS_ERR" camunda:errorMessage="Error Message" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="error_event_main_process">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qp1pak_di" bpmnElement="CallSubProcessCallActivity">
+        <dc:Bounds x="260" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_008idin_di" bpmnElement="Event_008idin">
+        <dc:Bounds x="582" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19aylb7_di" bpmnElement="Task1Task">
+        <dc:Bounds x="410" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09b12hu_di" bpmnElement="ErrorIdentifiedTask">
+        <dc:Bounds x="410" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0zoekos_di" bpmnElement="Event_0zoekos">
+        <dc:Bounds x="552" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1tyal39_di" bpmnElement="Event_1f4snr9">
+        <dc:Bounds x="322" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_01bskkx_di" bpmnElement="Flow_01bskkx">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="260" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1b15uoo_di" bpmnElement="Flow_1b15uoo">
+        <di:waypoint x="340" y="178" />
+        <di:waypoint x="340" y="240" />
+        <di:waypoint x="410" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hg9nvc_di" bpmnElement="Flow_0hg9nvc">
+        <di:waypoint x="360" y="120" />
+        <di:waypoint x="410" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_000a6qj_di" bpmnElement="Flow_000a6qj">
+        <di:waypoint x="510" y="120" />
+        <di:waypoint x="582" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07mzn8k_di" bpmnElement="Flow_07mzn8k">
+        <di:waypoint x="510" y="240" />
+        <di:waypoint x="552" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

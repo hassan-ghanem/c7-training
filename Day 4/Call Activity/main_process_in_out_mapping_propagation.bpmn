@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_03flx29" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:collaboration id="Collaboration_1eb59im">
+    <bpmn:participant id="MainProcessParticipant" name="Main Process" processRef="main_process" />
+    <bpmn:textAnnotation id="TextAnnotation_11ftk9x">
+      <bpmn:text>Both var1 and var2 are declared as global variables</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0j859go" associationDirection="None" sourceRef="Event_05xyn7v" targetRef="TextAnnotation_11ftk9x" />
+    <bpmn:textAnnotation id="TextAnnotation_1v9ddeq">
+      <bpmn:text>In mapping propagation:
+
+Both 'Propagate all variables' and 'local' are checked so only local variables of the execution executing the call activity are mapped into the called process instance (var2)</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0kpp9mx" associationDirection="None" sourceRef="CallSubProcessCallActivity" targetRef="TextAnnotation_1v9ddeq" />
+    <bpmn:textAnnotation id="TextAnnotation_077f6y6">
+      <bpmn:text>Out mapping propagation:
+
+Both 'Propagate all variables' and 'local' are checked so all variables are mapped to local variables of the execution executing the call activity.
+Configuring 'Outputs', we managed to create a global variable 'main_output_var' holding the value of the locally created variable 'output_var2'</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1lribmd" associationDirection="None" sourceRef="CallSubProcessCallActivity" targetRef="TextAnnotation_077f6y6" />
+  </bpmn:collaboration>
+  <bpmn:process id="main_process" name="main_process" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="Event_05xyn7v">
+      <bpmn:extensionElements>
+        <camunda:executionListener expression="#{execution.setVariable(&#34;var1&#34;, &#34;Test 1&#34;)}" event="start" />
+        <camunda:executionListener expression="#{execution.setVariable(&#34;var2&#34;, &#34;Test 2&#34;)}" event="start" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0mj8ks7</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_012bzoj">
+      <bpmn:incoming>Flow_131jib1</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task2Task" name="Task 2">
+      <bpmn:incoming>Flow_1pwv9kh</bpmn:incoming>
+      <bpmn:outgoing>Flow_131jib1</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task1Task" name="Task 1">
+      <bpmn:incoming>Flow_0mj8ks7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0km6nm3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:callActivity id="CallSubProcessCallActivity" name="Call Sub-Process" calledElement="called_process">
+      <bpmn:extensionElements>
+        <camunda:in businessKey="#{execution.processBusinessKey}" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="var2">#{var2}</camunda:inputParameter>
+          <camunda:outputParameter name="main_output_var">#{output_var2}</camunda:outputParameter>
+        </camunda:inputOutput>
+        <camunda:in local="true" variables="all" />
+        <camunda:out local="true" variables="all" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0km6nm3</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pwv9kh</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_0mj8ks7" sourceRef="Event_05xyn7v" targetRef="Task1Task" />
+    <bpmn:sequenceFlow id="Flow_131jib1" sourceRef="Task2Task" targetRef="Event_012bzoj" />
+    <bpmn:sequenceFlow id="Flow_1pwv9kh" sourceRef="CallSubProcessCallActivity" targetRef="Task2Task" />
+    <bpmn:sequenceFlow id="Flow_0km6nm3" sourceRef="Task1Task" targetRef="CallSubProcessCallActivity" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1eb59im">
+      <bpmndi:BPMNShape id="Participant_1wuurha_di" bpmnElement="MainProcessParticipant" isHorizontal="true">
+        <dc:Bounds x="160" y="50" width="940" height="430" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05xyn7v_di" bpmnElement="Event_05xyn7v">
+        <dc:Bounds x="342" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_012bzoj_di" bpmnElement="Event_012bzoj">
+        <dc:Bounds x="902" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1k1flpg_di" bpmnElement="Task2Task">
+        <dc:Bounds x="740" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vos9rg_di" bpmnElement="Task1Task">
+        <dc:Bounds x="430" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1oaoblx_di" bpmnElement="CallSubProcessCallActivity">
+        <dc:Bounds x="580" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0mj8ks7_di" bpmnElement="Flow_0mj8ks7">
+        <di:waypoint x="378" y="260" />
+        <di:waypoint x="430" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_131jib1_di" bpmnElement="Flow_131jib1">
+        <di:waypoint x="840" y="260" />
+        <di:waypoint x="902" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pwv9kh_di" bpmnElement="Flow_1pwv9kh">
+        <di:waypoint x="680" y="260" />
+        <di:waypoint x="740" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0km6nm3_di" bpmnElement="Flow_0km6nm3">
+        <di:waypoint x="530" y="260" />
+        <di:waypoint x="580" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0j859go_di" bpmnElement="Association_0j859go">
+        <di:waypoint x="356" y="243" />
+        <di:waypoint x="345" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1lribmd_di" bpmnElement="Association_1lribmd">
+        <di:waypoint x="678" y="296" />
+        <di:waypoint x="710" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0kpp9mx_di" bpmnElement="Association_0kpp9mx">
+        <di:waypoint x="659" y="220" />
+        <di:waypoint x="681" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_11ftk9x_di" bpmnElement="TextAnnotation_11ftk9x">
+        <dc:Bounds x="280" y="140" width="190" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_077f6y6_di" bpmnElement="TextAnnotation_077f6y6">
+        <dc:Bounds x="690" y="320" width="320" height="127" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1v9ddeq_di" bpmnElement="TextAnnotation_1v9ddeq">
+        <dc:Bounds x="560" y="77" width="220" height="113" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

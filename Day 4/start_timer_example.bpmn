@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0ajtf2d" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="start_timer_example" name="start_timer_example" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0vllpgj</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_104fn7j">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R/P3M</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0vllpgj" sourceRef="StartEvent_1" targetRef="GenerateAReportTask" />
+    <bpmn:serviceTask id="GenerateAReportTask" name="Generate a Report" camunda:type="external" camunda:topic="generate-report">
+      <bpmn:incoming>Flow_0vllpgj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rclj5c</bpmn:outgoing>
+      <bpmn:property id="Property_0urbfad" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_14t5syw">
+        <bpmn:sourceRef>DataStoreReference_00xx72v</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0urbfad</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:dataStoreReference id="DataStoreReference_00xx72v" />
+    <bpmn:sequenceFlow id="Flow_1rclj5c" sourceRef="GenerateAReportTask" targetRef="SendTheReportTask" />
+    <bpmn:sendTask id="SendTheReportTask" name="Send the Report" camunda:type="external" camunda:topic="send-report">
+      <bpmn:incoming>Flow_1rclj5c</bpmn:incoming>
+      <bpmn:outgoing>Flow_1q6khtq</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="Event_0z8xnvf">
+      <bpmn:incoming>Flow_1q6khtq</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1q6khtq" sourceRef="SendTheReportTask" targetRef="Event_0z8xnvf" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="start_timer_example">
+      <bpmndi:BPMNShape id="Event_1thqlbs_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19aeapi_di" bpmnElement="GenerateAReportTask">
+        <dc:Bounds x="340" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_00xx72v_di" bpmnElement="DataStoreReference_00xx72v">
+        <dc:Bounds x="365" y="265" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14dfogs_di" bpmnElement="SendTheReportTask">
+        <dc:Bounds x="530" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0z8xnvf_di" bpmnElement="Event_0z8xnvf">
+        <dc:Bounds x="722" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0vllpgj_di" bpmnElement="Flow_0vllpgj">
+        <di:waypoint x="218" y="120" />
+        <di:waypoint x="340" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_14t5syw_di" bpmnElement="DataInputAssociation_14t5syw">
+        <di:waypoint x="390" y="265" />
+        <di:waypoint x="390" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rclj5c_di" bpmnElement="Flow_1rclj5c">
+        <di:waypoint x="440" y="120" />
+        <di:waypoint x="530" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1q6khtq_di" bpmnElement="Flow_1q6khtq">
+        <di:waypoint x="630" y="120" />
+        <di:waypoint x="722" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

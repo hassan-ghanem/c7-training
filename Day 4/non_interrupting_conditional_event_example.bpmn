@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1n0cwdd" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="non_interrupting_conditional_event_example" name="non_interrupting_conditional_event_example" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:executionListener expression="#{execution.setVariable(&#34;priority&#34;,  1)}" event="start" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0vvsxah</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0vvsxah" sourceRef="StartEvent_1" targetRef="Task1Task" />
+    <bpmn:endEvent id="Event_0uhsuz7">
+      <bpmn:incoming>Flow_0mkc83j</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0mkc83j" sourceRef="Task1Task" targetRef="Event_0uhsuz7" />
+    <bpmn:userTask id="Task1Task" name="Task 1">
+      <bpmn:incoming>Flow_0vvsxah</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mkc83j</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:subProcess id="Activity_1fhpown" triggeredByEvent="true">
+      <bpmn:sequenceFlow id="Flow_09g7gb5" sourceRef="Priority10StartEvent" targetRef="HighPriorityNotificationTask" />
+      <bpmn:endEvent id="Event_0p6vyxb">
+        <bpmn:incoming>Flow_0tiosg1</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0tiosg1" sourceRef="HighPriorityNotificationTask" targetRef="Event_0p6vyxb" />
+      <bpmn:startEvent id="Priority10StartEvent" name="Priority &#62; 10" isInterrupting="false">
+        <bpmn:outgoing>Flow_09g7gb5</bpmn:outgoing>
+        <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_17wksss" camunda:variableName="priority">
+          <bpmn:condition xsi:type="bpmn:tFormalExpression">#{priority &gt; 10}</bpmn:condition>
+        </bpmn:conditionalEventDefinition>
+      </bpmn:startEvent>
+      <bpmn:sendTask id="HighPriorityNotificationTask" name="High Priority Notification" camunda:type="external" camunda:topic="send-email">
+        <bpmn:incoming>Flow_09g7gb5</bpmn:incoming>
+        <bpmn:outgoing>Flow_0tiosg1</bpmn:outgoing>
+      </bpmn:sendTask>
+    </bpmn:subProcess>
+    <bpmn:textAnnotation id="TextAnnotation_1y4yub1">
+      <bpmn:text>priority variable = 1</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_19urb3f" associationDirection="None" sourceRef="StartEvent_1" targetRef="TextAnnotation_1y4yub1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="non_interrupting_conditional_event_example">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="232" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0uhsuz7_di" bpmnElement="Event_0uhsuz7">
+        <dc:Bounds x="572" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dcz938_di" bpmnElement="Task1Task">
+        <dc:Bounds x="370" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0wzm8oa_di" bpmnElement="Activity_1fhpown" isExpanded="true">
+        <dc:Bounds x="227" y="250" width="385" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0p6vyxb_di" bpmnElement="Event_0p6vyxb">
+        <dc:Bounds x="524" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_13nt8m5_di" bpmnElement="Priority10StartEvent">
+        <dc:Bounds x="267" y="332" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="256" y="375" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bxjaej_di" bpmnElement="HighPriorityNotificationTask">
+        <dc:Bounds x="362" y="310" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_09g7gb5_di" bpmnElement="Flow_09g7gb5">
+        <di:waypoint x="303" y="350" />
+        <di:waypoint x="362" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tiosg1_di" bpmnElement="Flow_0tiosg1">
+        <di:waypoint x="462" y="350" />
+        <di:waypoint x="524" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_19urb3f_di" bpmnElement="Association_19urb3f">
+        <di:waypoint x="248" y="152" />
+        <di:waypoint x="243" y="111" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vvsxah_di" bpmnElement="Flow_0vvsxah">
+        <di:waypoint x="268" y="170" />
+        <di:waypoint x="370" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mkc83j_di" bpmnElement="Flow_0mkc83j">
+        <di:waypoint x="470" y="170" />
+        <di:waypoint x="572" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1y4yub1_di" bpmnElement="TextAnnotation_1y4yub1">
+        <dc:Bounds x="160" y="80" width="130" height="31" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

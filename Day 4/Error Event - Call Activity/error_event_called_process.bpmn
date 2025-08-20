@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0f502vk" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="error_event_called_process" name="error_event_called_process" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1m072fb</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1m072fb" sourceRef="StartEvent_1" targetRef="Task1Task" />
+    <bpmn:userTask id="Task1Task" name="Task 1">
+      <bpmn:incoming>Flow_1m072fb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kg914n</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="InvalidDataGateway" name="Invalid Data?">
+      <bpmn:incoming>Flow_0kg914n</bpmn:incoming>
+      <bpmn:outgoing>NoSequenceFlow</bpmn:outgoing>
+      <bpmn:outgoing>YesSequenceFlow</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0kg914n" sourceRef="Task1Task" targetRef="InvalidDataGateway" />
+    <bpmn:endEvent id="Event_03p5f4f">
+      <bpmn:incoming>NoSequenceFlow</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="NoSequenceFlow" name="No" sourceRef="InvalidDataGateway" targetRef="Event_03p5f4f">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{!invalidData}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="YesSequenceFlow" name="Yes" sourceRef="InvalidDataGateway" targetRef="Event_02hjgjo">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{invalidData}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_02hjgjo">
+      <bpmn:incoming>YesSequenceFlow</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0qycnhi" errorRef="Error_04z64pz" />
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:error id="Error_04z64pz" name="Error" errorCode="CALLED_PROCESS_ERR" camunda:errorMessage="An error has occured" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="error_event_called_process">
+      <bpmndi:BPMNShape id="Gateway_08700yt_di" bpmnElement="InvalidDataGateway" isMarkerVisible="true">
+        <dc:Bounds x="425" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="367" y="83" width="65" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03p5f4f_di" bpmnElement="Event_03p5f4f">
+        <dc:Bounds x="612" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0a8etmj_di" bpmnElement="Event_02hjgjo">
+        <dc:Bounds x="612" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="142" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1541jdp_di" bpmnElement="Task1Task">
+        <dc:Bounds x="230" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1m072fb_di" bpmnElement="Flow_1m072fb">
+        <di:waypoint x="178" y="120" />
+        <di:waypoint x="230" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kg914n_di" bpmnElement="Flow_0kg914n">
+        <di:waypoint x="330" y="120" />
+        <di:waypoint x="425" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nq6lhf_di" bpmnElement="NoSequenceFlow">
+        <di:waypoint x="475" y="120" />
+        <di:waypoint x="612" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="522" y="102" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0l2lshk_di" bpmnElement="YesSequenceFlow">
+        <di:waypoint x="450" y="145" />
+        <di:waypoint x="450" y="230" />
+        <di:waypoint x="612" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="521" y="213" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

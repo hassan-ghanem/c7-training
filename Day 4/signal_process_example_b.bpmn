@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0uyr060" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="signal_process_example_b" name="signal_process_example_b" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:sequenceFlow id="Flow_0iuol54" sourceRef="PolicyChangedStartEvent" targetRef="Task1BTask" />
+    <bpmn:endEvent id="Event_08w3tlu">
+      <bpmn:incoming>Flow_0v7dqua</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0v7dqua" sourceRef="Task1BTask" targetRef="Event_08w3tlu" />
+    <bpmn:startEvent id="PolicyChangedStartEvent" name="Policy Changed">
+      <bpmn:outgoing>Flow_0iuol54</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_1h9bewd" signalRef="Signal_3pj4o7n" />
+    </bpmn:startEvent>
+    <bpmn:userTask id="Task1BTask" name="Task 1 B">
+      <bpmn:incoming>Flow_0iuol54</bpmn:incoming>
+      <bpmn:outgoing>Flow_0v7dqua</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmn:signal id="Signal_3pj4o7n" name="Policy_Changed" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="signal_process_example_b">
+      <bpmndi:BPMNShape id="Event_08w3tlu_di" bpmnElement="Event_08w3tlu">
+        <dc:Bounds x="422" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_08r1xqy_di" bpmnElement="PolicyChangedStartEvent">
+        <dc:Bounds x="182" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="161" y="145" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sbwff8_di" bpmnElement="Task1BTask">
+        <dc:Bounds x="270" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0iuol54_di" bpmnElement="Flow_0iuol54">
+        <di:waypoint x="218" y="120" />
+        <di:waypoint x="270" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0v7dqua_di" bpmnElement="Flow_0v7dqua">
+        <di:waypoint x="370" y="120" />
+        <di:waypoint x="422" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
