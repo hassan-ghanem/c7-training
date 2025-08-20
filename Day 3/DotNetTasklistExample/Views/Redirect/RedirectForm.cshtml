@@ -1,0 +1,12 @@
+﻿@{
+    // Get the values from ViewBag and cast them to strings
+    var formKey = (string) ViewBag.FormKey;
+    var taskId = (string) ViewBag.TaskId;
+    var processInstanceId = (string) ViewBag.ProcessInstanceId;
+
+    // Generate the URL for the redirect
+    var redirectUrl = Url.Action("Index", formKey, new { taskId = taskId, processInstanceId = processInstanceId });
+
+    // Perform the redirect
+    Context.Response.Redirect(redirectUrl);
+}

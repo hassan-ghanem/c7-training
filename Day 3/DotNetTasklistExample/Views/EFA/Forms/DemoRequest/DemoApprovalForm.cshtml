@@ -1,0 +1,59 @@
+@model DemoTasklist.Models.EFA.DemoRequest.DemoApprovalFormModel
+
+@{
+    ViewData["Title"] = "Demo Request Approval";
+}
+
+<h2 class="text-center">Demo Request Approval</h2>
+<form asp-action="SubmitDemoApprovalForm" method="post" class="container">
+    <input type="hidden" asp-for="TaskId" />
+    <input type="hidden" asp-for="ProcessInstanceId" />
+
+    <!-- Display Request Information (Read-only) -->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" id="Name" readonly />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <label for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" id="Description" rows="4" readonly></textarea>
+        </div>
+    </div>
+
+    <hr />
+
+    <!-- Approval Section -->
+    <h4>Approval Decision</h4>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="actionSelect" class="form-label">Action <span class="text-danger">*</span></label>
+            <select asp-for="ApproverAction" class="form-control" id="actionSelect" required>
+                <option value="">-- Select Action --</option>
+                <option value="approved">Approve</option>
+                <option value="rejected">Reject</option>
+            </select>
+            <span asp-validation-for="ApproverAction" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <label for="ApproverComments" class="form-label">Comments</label>
+            <textarea asp-for="ApproverComments" class="form-control" id="ApproverComments" rows="3" placeholder="Enter your comments (optional)"></textarea>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-paper-plane"></i> Submit
+            </button>
+        </div>
+    </div>
+</form>
+

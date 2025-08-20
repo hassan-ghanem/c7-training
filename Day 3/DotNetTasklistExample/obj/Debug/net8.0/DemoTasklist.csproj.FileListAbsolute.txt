@@ -1,0 +1,98 @@
+C:\DotNetTasklistExample\bin\Debug\net8.0\appsettings.Development.json
+C:\DotNetTasklistExample\bin\Debug\net8.0\appsettings.json
+C:\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.staticwebassets.runtime.json
+C:\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.staticwebassets.endpoints.json
+C:\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.exe
+C:\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.deps.json
+C:\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.runtimeconfig.json
+C:\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.pdb
+C:\DotNetTasklistExample\bin\Debug\net8.0\Camunda.Api.Client.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Negotiate.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.Features.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\Refit.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\System.DirectoryServices.Protocols.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\runtimes\linux\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\runtimes\osx\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\DotNetTasklistExample\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.csproj.AssemblyReference.cache
+C:\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.GeneratedMSBuildEditorConfig.editorconfig
+C:\DotNetTasklistExample\obj\Debug\net8.0\RefitStubs.g.cs
+C:\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.AssemblyInfoInputs.cache
+C:\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.AssemblyInfo.cs
+C:\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.csproj.CoreCompileInputs.cache
+C:\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.MvcApplicationPartsAssemblyInfo.cache
+C:\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.RazorAssemblyInfo.cache
+C:\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.RazorAssemblyInfo.cs
+C:\DotNetTasklistExample\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\DotNetTasklistExample\obj\Debug\net8.0\scopedcss\bundle\DemoTasklist.styles.css
+C:\DotNetTasklistExample\obj\Debug\net8.0\scopedcss\projectbundle\DemoTasklist.bundle.scp.css
+C:\DotNetTasklistExample\obj\Debug\net8.0\staticwebassets.build.json
+C:\DotNetTasklistExample\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\DotNetTasklistExample\obj\Debug\net8.0\staticwebassets.development.json
+C:\DotNetTasklistExample\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\DotNetTasklistExample\obj\Debug\net8.0\DemoTask.B71FD44B.Up2Date
+C:\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.dll
+C:\DotNetTasklistExample\obj\Debug\net8.0\refint\DemoTasklist.dll
+C:\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.pdb
+C:\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.genruntimeconfig.cache
+C:\DotNetTasklistExample\obj\Debug\net8.0\ref\DemoTasklist.dll
+C:\DotNetTasklistExample\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\appsettings.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.staticwebassets.endpoints.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.staticwebassets.runtime.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.exe
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.deps.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.runtimeconfig.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\DemoTasklist.pdb
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\Camunda.Api.Client.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Negotiate.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.Features.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\Refit.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\runtimes\linux\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\runtimes\osx\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.csproj.AssemblyReference.cache
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\RefitStubs.g.cs
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.AssemblyInfoInputs.cache
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.AssemblyInfo.cs
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.csproj.CoreCompileInputs.cache
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.RazorAssemblyInfo.cache
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.RazorAssemblyInfo.cs
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\scopedcss\bundle\DemoTasklist.styles.css
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\scopedcss\projectbundle\DemoTasklist.bundle.scp.css
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\DemoTask.B71FD44B.Up2Date
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\refint\DemoTasklist.dll
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.pdb
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\DemoTasklist.genruntimeconfig.cache
+C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\obj\Debug\net8.0\ref\DemoTasklist.dll

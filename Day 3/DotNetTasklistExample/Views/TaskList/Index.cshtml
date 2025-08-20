@@ -1,0 +1,103 @@
+﻿@model List<Camunda.Api.Client.UserTask.UserTaskInfo>
+
+<h1 class="my-4">
+    <i class="fa fa-tasks"></i> Pending Tasks
+</h1>
+
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam" data-toggle="tooltip" title="Sort by Name">
+                    Task Name
+                    @if (ViewBag.CurrentSort == "name_desc")
+                    {
+                        <i class="fa fa-sort-alpha-desc"></i>
+                    }
+                    else if (ViewBag.CurrentSort == "name")
+                    {
+                        <i class="fa fa-sort-alpha-asc"></i>
+                    }
+                </a>
+            </th>
+            <th scope="col">
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.AssigneeSortParam" data-toggle="tooltip" title="Sort by Assignee">
+                    Assignee
+                    @if (ViewBag.CurrentSort == "assignee_desc")
+                    {
+                        <i class="fa fa-sort-alpha-desc"></i>
+                    }
+                    else if (ViewBag.CurrentSort == "assignee")
+                    {
+                        <i class="fa fa-sort-alpha-asc"></i>
+                    }
+                </a>
+            </th>
+            <th scope="col">
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.CreatedSortParam" data-toggle="tooltip" title="Sort by Created Date">
+                    Created
+                    @if (ViewBag.CurrentSort == "created_desc")
+                    {
+                        <i class="fa fa-sort-numeric-desc"></i>
+                    }
+                    else if (ViewBag.CurrentSort == "created")
+                    {
+                        <i class="fa fa-sort-numeric-asc"></i>
+                    }
+                </a>
+            </th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var task in Model)
+            {
+                <tr>
+                    <td data-toggle="tooltip" title="Task Name">@task.Name</td>
+                    <td data-toggle="tooltip" title="Assigned User">@(@task.Assignee ?? "[Unassigned]")</td>
+                    <td data-toggle="tooltip" title="Task Creation Date">@task.Created.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(task.FormKey))
+                        {
+                            <a class="btn btn-primary btn-sm" href="@Url.Action("Index", task.FormKey, new { taskId = task.Id, processInstanceId = task.ProcessInstanceId })" data-toggle="tooltip" title="Open Form">
+                                <i class="fa fa-folder-open"></i> Open Form
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-primary btn-sm disabled" href="#" tabindex="-1" aria-disabled="true">
+                                <i class="fa fa-folder-open"></i> Open Form
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center text-muted">No pending tasks available.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Pagination controls -->
+<nav aria-label="Task pagination">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-pageNumber="@(ViewBag.CurrentPage - 1)" asp-route-sortOrder="@ViewBag.CurrentSort">Previous</a>
+        </li>
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-pageNumber="@i" asp-route-sortOrder="@ViewBag.CurrentSort">@i</a>
+            </li>
+        }
+        <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-pageNumber="@(ViewBag.CurrentPage + 1)" asp-route-sortOrder="@ViewBag.CurrentSort">Next</a>
+        </li>
+    </ul>
+</nav>

@@ -1,0 +1,65 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = DemoTasklist
+build_property.RootNamespace = DemoTasklist
+build_property.ProjectDir = C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\hassa\OneDrive\Desktop\Camunda 7 Training\Day 3\DotNetTasklistExample
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/hassa/OneDrive/Desktop/Camunda 7 Training/Day 3/DotNetTasklistExample/Views/EFA/Forms/DemoRequest/DemoApprovalForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRUZBXEZvcm1zXERlbW9SZXF1ZXN0XERlbW9BcHByb3ZhbEZvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/hassa/OneDrive/Desktop/Camunda 7 Training/Day 3/DotNetTasklistExample/Views/EFA/Forms/DemoRequest/DemoRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRUZBXEZvcm1zXERlbW9SZXF1ZXN0XERlbW9SZXF1ZXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/hassa/OneDrive/Desktop/Camunda 7 Training/Day 3/DotNetTasklistExample/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/hassa/OneDrive/Desktop/Camunda 7 Training/Day 3/DotNetTasklistExample/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/hassa/OneDrive/Desktop/Camunda 7 Training/Day 3/DotNetTasklistExample/Views/Redirect/RedirectForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVkaXJlY3RcUmVkaXJlY3RGb3JtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/hassa/OneDrive/Desktop/Camunda 7 Training/Day 3/DotNetTasklistExample/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/hassa/OneDrive/Desktop/Camunda 7 Training/Day 3/DotNetTasklistExample/Views/Shared/ErrorPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yUGFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/hassa/OneDrive/Desktop/Camunda 7 Training/Day 3/DotNetTasklistExample/Views/TaskList/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFza0xpc3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/hassa/OneDrive/Desktop/Camunda 7 Training/Day 3/DotNetTasklistExample/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/hassa/OneDrive/Desktop/Camunda 7 Training/Day 3/DotNetTasklistExample/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/hassa/OneDrive/Desktop/Camunda 7 Training/Day 3/DotNetTasklistExample/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-y1aats7ylh

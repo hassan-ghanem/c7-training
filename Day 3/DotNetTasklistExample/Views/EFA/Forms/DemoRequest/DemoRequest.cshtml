@@ -1,0 +1,38 @@
+@model DemoTasklist.Models.EFA.DemoRequest.DemoRequestViewModel
+
+@{
+    ViewData["Title"] = "Demo Request Form";
+}
+
+<h2 class="text-center">Demo Request Form</h2>
+
+<div class="container mt-3">
+    <form asp-action="SubmitDemoRequest" method="post" class="container" novalidate>
+        
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="Name" class="form-label">Name <span class="text-danger">*</span></label>
+                <input asp-for="Name" class="form-control" id="Name" placeholder="Enter name" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <label for="Description" class="form-label">Description <span class="text-danger">*</span></label>
+                <textarea asp-for="Description" class="form-control" id="Description" rows="4" placeholder="Enter description" required></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-paper-plane"></i> Submit
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
