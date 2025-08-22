@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_14rl24g" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="save_point_example" name="save_point_example" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0x17a0e</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0x17a0e" sourceRef="StartEvent_1" targetRef="Task1Task" />
+    <bpmn:sequenceFlow id="Flow_1uodhqq" sourceRef="Task1Task" targetRef="Event_1rmlcim" />
+    <bpmn:intermediateThrowEvent id="Event_1rmlcim">
+      <bpmn:incoming>Flow_1uodhqq</bpmn:incoming>
+      <bpmn:outgoing>Flow_1u1tb90</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_00exlom" camunda:expression="#{execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#39;msg_received&#39;).correlate()}" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:userTask id="Task1Task" name="Task 1" camunda:asyncAfter="true">
+      <bpmn:incoming>Flow_0x17a0e</bpmn:incoming>
+      <bpmn:outgoing>Flow_1uodhqq</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1u1tb90" sourceRef="Event_1rmlcim" targetRef="Task2Task" />
+    <bpmn:scriptTask id="Task2Task" name="Task 2" scriptFormat="JavaScript">
+      <bpmn:incoming>Flow_1u1tb90</bpmn:incoming>
+      <bpmn:outgoing>Flow_0iy9qnl</bpmn:outgoing>
+      <bpmn:script>var Thread = java.lang.Thread;
+
+Thread.sleep(60000);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_0eodp4k">
+      <bpmn:incoming>Flow_0iy9qnl</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0iy9qnl" sourceRef="Task2Task" targetRef="Event_0eodp4k" />
+    <bpmn:textAnnotation id="TextAnnotation_0bifhsx">
+      <bpmn:text>Please deploy 'save_point_example_called_process' first</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0rnx2xf" associationDirection="None" sourceRef="Event_1rmlcim" targetRef="TextAnnotation_0bifhsx" />
+    <bpmn:textAnnotation id="TextAnnotation_0kkpz04">
+      <bpmn:text>asyncAfter has been enabled</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1kudlhf" associationDirection="None" sourceRef="Task1Task" targetRef="TextAnnotation_0kkpz04" />
+    <bpmn:textAnnotation id="TextAnnotation_02d3thc">
+      <bpmn:text>Thread.sleep(60000);</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_05m5q8j" associationDirection="None" sourceRef="Task2Task" targetRef="TextAnnotation_02d3thc" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="save_point_example">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1pwy9uc_di" bpmnElement="Event_1rmlcim">
+        <dc:Bounds x="422" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1e3yo64_di" bpmnElement="Task1Task">
+        <dc:Bounds x="270" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09ptfex_di" bpmnElement="Task2Task">
+        <dc:Bounds x="510" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0eodp4k_di" bpmnElement="Event_0eodp4k">
+        <dc:Bounds x="662" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0rnx2xf_di" bpmnElement="Association_0rnx2xf">
+        <di:waypoint x="451" y="185" />
+        <di:waypoint x="505" y="111" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1kudlhf_di" bpmnElement="Association_1kudlhf">
+        <di:waypoint x="356" y="240" />
+        <di:waypoint x="427" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_05m5q8j_di" bpmnElement="Association_05m5q8j">
+        <di:waypoint x="605" y="238" />
+        <di:waypoint x="642" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0bifhsx_di" bpmnElement="TextAnnotation_0bifhsx">
+        <dc:Bounds x="370" y="80" width="350" height="31" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0kkpz04_di" bpmnElement="TextAnnotation_0kkpz04">
+        <dc:Bounds x="390" y="320" width="190" height="26" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0x17a0e_di" bpmnElement="Flow_0x17a0e">
+        <di:waypoint x="218" y="200" />
+        <di:waypoint x="270" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1uodhqq_di" bpmnElement="Flow_1uodhqq">
+        <di:waypoint x="370" y="200" />
+        <di:waypoint x="422" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1u1tb90_di" bpmnElement="Flow_1u1tb90">
+        <di:waypoint x="458" y="200" />
+        <di:waypoint x="510" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0iy9qnl_di" bpmnElement="Flow_0iy9qnl">
+        <di:waypoint x="610" y="200" />
+        <di:waypoint x="662" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_02d3thc_di" bpmnElement="TextAnnotation_02d3thc">
+        <dc:Bounds x="610" y="270" width="160" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

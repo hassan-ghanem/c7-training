@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0kakq92" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="save_point_example_called_process" name="save_point_example_called_process" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0ndbit4</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0ylte7j" messageRef="Message_2v9mpum" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0ndbit4" sourceRef="StartEvent_1" targetRef="Task1Task" />
+    <bpmn:scriptTask id="Task1Task" name="Task 1" scriptFormat="JavaScript">
+      <bpmn:incoming>Flow_0ndbit4</bpmn:incoming>
+      <bpmn:outgoing>Flow_04g2w6c</bpmn:outgoing>
+      <bpmn:script>var System = java.lang.System;
+
+System.out.println("sub-process is called");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_11gwsri">
+      <bpmn:incoming>Flow_04g2w6c</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_04g2w6c" sourceRef="Task1Task" targetRef="Event_11gwsri" />
+  </bpmn:process>
+  <bpmn:message id="Message_2v9mpum" name="msg_received" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="save_point_example_called_process">
+      <bpmndi:BPMNShape id="Event_0sxnj4f_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1r1lsmx_di" bpmnElement="Task1Task">
+        <dc:Bounds x="270" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11gwsri_di" bpmnElement="Event_11gwsri">
+        <dc:Bounds x="422" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0ndbit4_di" bpmnElement="Flow_0ndbit4">
+        <di:waypoint x="218" y="120" />
+        <di:waypoint x="270" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04g2w6c_di" bpmnElement="Flow_04g2w6c">
+        <di:waypoint x="370" y="120" />
+        <di:waypoint x="422" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

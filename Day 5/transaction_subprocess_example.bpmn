@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0yo9fhf" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="transaction_subprocess_example" name="transaction_subprocess_example" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0f0eem9</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:transaction id="Activity_1kl6gph">
+      <bpmn:incoming>Flow_0f0eem9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1so8i5y</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1sbet25">
+        <bpmn:outgoing>Flow_1hgwmxm</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1hgwmxm" sourceRef="Event_1sbet25" targetRef="BookHotelTask" />
+      <bpmn:userTask id="BookHotelTask" name="Book Hotel">
+        <bpmn:incoming>Flow_1hgwmxm</bpmn:incoming>
+        <bpmn:outgoing>Flow_1c3pubz</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_1c3pubz" sourceRef="BookHotelTask" targetRef="ProcessPaymentTask" />
+      <bpmn:serviceTask id="ProcessPaymentTask" name="Process Payment" camunda:type="external" camunda:topic="process-payment">
+        <bpmn:incoming>Flow_1c3pubz</bpmn:incoming>
+        <bpmn:outgoing>Flow_04soouv</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="Event_128b2yw">
+        <bpmn:incoming>Flow_04soouv</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_04soouv" sourceRef="ProcessPaymentTask" targetRef="Event_128b2yw" />
+      <bpmn:boundaryEvent id="Event_0ehk9fs" attachedToRef="ProcessPaymentTask">
+        <bpmn:outgoing>Flow_1arn0gm</bpmn:outgoing>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_02j262e" errorRef="Error_0tqpkqh" />
+      </bpmn:boundaryEvent>
+      <bpmn:sequenceFlow id="Flow_1arn0gm" sourceRef="Event_0ehk9fs" targetRef="Event_1e6h14u" />
+      <bpmn:endEvent id="Event_1e6h14u">
+        <bpmn:incoming>Flow_1arn0gm</bpmn:incoming>
+        <bpmn:cancelEventDefinition id="CancelEventDefinition_1fxu7u5" />
+      </bpmn:endEvent>
+      <bpmn:boundaryEvent id="Event_0mhlh58" attachedToRef="BookHotelTask">
+        <bpmn:compensateEventDefinition id="CompensateEventDefinition_1p6okqi" />
+      </bpmn:boundaryEvent>
+      <bpmn:userTask id="CancelBookHotelTask" name="Cancel Book Hotel" isForCompensation="true" />
+      <bpmn:association id="Association_0ix5ka4" associationDirection="One" sourceRef="Event_0mhlh58" targetRef="CancelBookHotelTask" />
+    </bpmn:transaction>
+    <bpmn:sequenceFlow id="Flow_0f0eem9" sourceRef="StartEvent_1" targetRef="Activity_1kl6gph" />
+    <bpmn:boundaryEvent id="Event_15nobj7" attachedToRef="Activity_1kl6gph">
+      <bpmn:outgoing>Flow_1yp8j3d</bpmn:outgoing>
+      <bpmn:cancelEventDefinition id="CancelEventDefinition_11j59il" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1yp8j3d" sourceRef="Event_15nobj7" targetRef="ExtraWorkTask" />
+    <bpmn:endEvent id="Event_06hto9m">
+      <bpmn:incoming>Flow_1c5g7r8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1c5g7r8" sourceRef="ExtraWorkTask" targetRef="Event_06hto9m" />
+    <bpmn:userTask id="ExtraWorkTask" name="Extra Work">
+      <bpmn:incoming>Flow_1yp8j3d</bpmn:incoming>
+      <bpmn:outgoing>Flow_1c5g7r8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1so8i5y" sourceRef="Activity_1kl6gph" targetRef="NextTaskTask" />
+    <bpmn:endEvent id="Event_0qh5edo">
+      <bpmn:incoming>Flow_0yoi2jf</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0yoi2jf" sourceRef="NextTaskTask" targetRef="Event_0qh5edo" />
+    <bpmn:userTask id="NextTaskTask" name="Next Task">
+      <bpmn:incoming>Flow_1so8i5y</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yoi2jf</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmn:error id="Error_0tqpkqh" name="PAYMENT FAILED" errorCode="PAYMENT_FAILED" camunda:errorMessage="Payment failed" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="transaction_subprocess_example">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="262" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_181w6ca_di" bpmnElement="Activity_1kl6gph" isExpanded="true">
+        <dc:Bounds x="320" y="80" width="720" height="380" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1sbet25_di" bpmnElement="Event_1sbet25">
+        <dc:Bounds x="392" y="202" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1o50w7p_di" bpmnElement="BookHotelTask">
+        <dc:Bounds x="480" y="180" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0z3flr0_di" bpmnElement="ProcessPaymentTask">
+        <dc:Bounds x="720" y="180" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_128b2yw_di" bpmnElement="Event_128b2yw">
+        <dc:Bounds x="882" y="202" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mlg0ig_di" bpmnElement="Event_1e6h14u">
+        <dc:Bounds x="862" y="322" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rkwt8f_di" bpmnElement="CancelBookHotelTask">
+        <dc:Bounds x="620" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06bwurd_di" bpmnElement="Event_0mhlh58">
+        <dc:Bounds x="532" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06qf5l0_di" bpmnElement="Event_0ehk9fs">
+        <dc:Bounds x="772" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1hgwmxm_di" bpmnElement="Flow_1hgwmxm">
+        <di:waypoint x="428" y="220" />
+        <di:waypoint x="480" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1c3pubz_di" bpmnElement="Flow_1c3pubz">
+        <di:waypoint x="580" y="220" />
+        <di:waypoint x="720" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04soouv_di" bpmnElement="Flow_04soouv">
+        <di:waypoint x="820" y="220" />
+        <di:waypoint x="882" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1arn0gm_di" bpmnElement="Flow_1arn0gm">
+        <di:waypoint x="790" y="278" />
+        <di:waypoint x="790" y="340" />
+        <di:waypoint x="862" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0ix5ka4_di" bpmnElement="Association_0ix5ka4">
+        <di:waypoint x="550" y="278" />
+        <di:waypoint x="550" y="340" />
+        <di:waypoint x="620" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_06hto9m_di" bpmnElement="Event_06hto9m">
+        <dc:Bounds x="1162" y="522" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rpoz1f_di" bpmnElement="ExtraWorkTask">
+        <dc:Bounds x="1010" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0qh5edo_di" bpmnElement="Event_0qh5edo">
+        <dc:Bounds x="1362" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06ntieq_di" bpmnElement="NextTaskTask">
+        <dc:Bounds x="1150" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ui8ytx_di" bpmnElement="Event_15nobj7">
+        <dc:Bounds x="922" y="442" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0f0eem9_di" bpmnElement="Flow_0f0eem9">
+        <di:waypoint x="218" y="280" />
+        <di:waypoint x="320" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yp8j3d_di" bpmnElement="Flow_1yp8j3d">
+        <di:waypoint x="940" y="478" />
+        <di:waypoint x="940" y="540" />
+        <di:waypoint x="1010" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1c5g7r8_di" bpmnElement="Flow_1c5g7r8">
+        <di:waypoint x="1110" y="540" />
+        <di:waypoint x="1162" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1so8i5y_di" bpmnElement="Flow_1so8i5y">
+        <di:waypoint x="1040" y="270" />
+        <di:waypoint x="1150" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yoi2jf_di" bpmnElement="Flow_0yoi2jf">
+        <di:waypoint x="1250" y="270" />
+        <di:waypoint x="1362" y="270" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

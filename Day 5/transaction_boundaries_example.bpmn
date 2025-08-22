@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0x6q8ln" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="transaction_boundaries_example" name="transaction_boundaries_example" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1jt6bbh</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1jt6bbh" sourceRef="StartEvent_1" targetRef="Task1Task" />
+    <bpmn:scriptTask id="Task3Task" name="Task 3" camunda:asyncBefore="true" scriptFormat="JavaScript">
+      <bpmn:incoming>Flow_11xr0wh</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pihxah</bpmn:outgoing>
+      <bpmn:script>throw new org.camunda.bpm.engine.ProcessEngineException("Something went wrong in the script task!");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_0u00ve7">
+      <bpmn:incoming>Flow_1pihxah</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1pihxah" sourceRef="Task3Task" targetRef="Event_0u00ve7" />
+    <bpmn:scriptTask id="Task2Task" name="Task 2" scriptFormat="JavaScript">
+      <bpmn:incoming>Flow_0xlmmgh</bpmn:incoming>
+      <bpmn:outgoing>Flow_11xr0wh</bpmn:outgoing>
+      <bpmn:script>var System = java.lang.System;
+
+System.out.println("Task 1 has been started");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_11xr0wh" sourceRef="Task2Task" targetRef="Task3Task" />
+    <bpmn:sequenceFlow id="Flow_0xlmmgh" sourceRef="Task1Task" targetRef="Task2Task" />
+    <bpmn:userTask id="Task1Task" name="Task 1">
+      <bpmn:incoming>Flow_1jt6bbh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xlmmgh</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:textAnnotation id="TextAnnotation_0x16zxp">
+      <bpmn:text>asyncBefore is enabled</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0vdw7l0" associationDirection="None" sourceRef="Task3Task" targetRef="TextAnnotation_0x16zxp" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="transaction_boundaries_example">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lcfyit_di" bpmnElement="Task3Task">
+        <dc:Bounds x="590" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0u00ve7_di" bpmnElement="Event_0u00ve7">
+        <dc:Bounds x="752" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03x6194_di" bpmnElement="Task2Task">
+        <dc:Bounds x="420" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00poo0u_di" bpmnElement="Task1Task">
+        <dc:Bounds x="250" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0vdw7l0_di" bpmnElement="Association_0vdw7l0">
+        <di:waypoint x="621" y="160" />
+        <di:waypoint x="597" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jt6bbh_di" bpmnElement="Flow_1jt6bbh">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="250" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pihxah_di" bpmnElement="Flow_1pihxah">
+        <di:waypoint x="690" y="120" />
+        <di:waypoint x="752" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11xr0wh_di" bpmnElement="Flow_11xr0wh">
+        <di:waypoint x="520" y="120" />
+        <di:waypoint x="590" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xlmmgh_di" bpmnElement="Flow_0xlmmgh">
+        <di:waypoint x="350" y="120" />
+        <di:waypoint x="420" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0x16zxp_di" bpmnElement="TextAnnotation_0x16zxp">
+        <dc:Bounds x="540" y="210" width="212" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
