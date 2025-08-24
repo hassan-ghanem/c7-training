@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1r1n2n3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="decide_assignment_example" name="decide_assignment_example" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0f9l39q</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0f9l39q" sourceRef="StartEvent_1" targetRef="DecideUsersTask" />
+    <bpmn:businessRuleTask id="DecideUsersTask" name="Decide Users" camunda:resultVariable="dmnResult" camunda:decisionRef="decide_users">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="assignee">
+            <camunda:script scriptFormat="feel">((dmnResult.assignee)[item != null])[1]</camunda:script>
+          </camunda:outputParameter>
+          <camunda:outputParameter name="candidateUsers">
+            <camunda:script scriptFormat="feel">(dmnResult.candidateUsers)[item != null]</camunda:script>
+          </camunda:outputParameter>
+          <camunda:outputParameter name="candidateGroups">
+            <camunda:script scriptFormat="feel">(dmnResult.candidateGroups)[item != null]</camunda:script>
+          </camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0f9l39q</bpmn:incoming>
+      <bpmn:outgoing>Flow_1qvk738</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_1qvk738" sourceRef="DecideUsersTask" targetRef="Task1Task" />
+    <bpmn:userTask id="Task1Task" name="Task 1" camunda:assignee="#{assignee}" camunda:candidateUsers="#{candidateUsers}" camunda:candidateGroups="#{candidateGroups}">
+      <bpmn:incoming>Flow_1qvk738</bpmn:incoming>
+      <bpmn:outgoing>Flow_15jilh6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_0nurt6r">
+      <bpmn:incoming>Flow_15jilh6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_15jilh6" sourceRef="Task1Task" targetRef="Event_0nurt6r" />
+    <bpmn:textAnnotation id="TextAnnotation_00nfiat">
+      <bpmn:text>Projection has been used
+https://docs.camunda.io/docs/components/modeler/feel/language-guide/feel-context-expressions/#projection</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_194df2h" associationDirection="None" sourceRef="DecideUsersTask" targetRef="TextAnnotation_00nfiat" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="decide_assignment_example">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bvyk03_di" bpmnElement="DecideUsersTask">
+        <dc:Bounds x="270" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15g3fyn_di" bpmnElement="Task1Task">
+        <dc:Bounds x="430" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0nurt6r_di" bpmnElement="Event_0nurt6r">
+        <dc:Bounds x="592" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_194df2h_di" bpmnElement="Association_194df2h">
+        <di:waypoint x="358" y="130" />
+        <di:waypoint x="406" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0f9l39q_di" bpmnElement="Flow_0f9l39q">
+        <di:waypoint x="218" y="170" />
+        <di:waypoint x="270" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qvk738_di" bpmnElement="Flow_1qvk738">
+        <di:waypoint x="370" y="170" />
+        <di:waypoint x="430" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15jilh6_di" bpmnElement="Flow_15jilh6">
+        <di:waypoint x="530" y="170" />
+        <di:waypoint x="592" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_00nfiat_di" bpmnElement="TextAnnotation_00nfiat">
+        <dc:Bounds x="340" y="10" width="288" height="70" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

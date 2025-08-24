@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1ng8zzt" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <decision id="decide_users" name="Decide Users" camunda:historyTimeToLive="180">
+    <informationRequirement id="InformationRequirement_1679byp">
+      <requiredInput href="#InputData_1ass6h6" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_02xcwmw">
+      <requiredInput href="#InputData_12x6te7" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0ka51nw" hitPolicy="COLLECT">
+      <input id="Input_1" label="Request Type">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>requestType</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_1eq0fdc">
+          <text>"A","B","C"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_07j32me" label="Amount">
+        <inputExpression id="LiteralExpression_0q6n3iu" typeRef="double">
+          <text>amount</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Assignee" name="assignee" typeRef="string" />
+      <output id="OutputClause_0aidu8x" label="Candidate Users" name="candidateUsers" typeRef="string" />
+      <output id="OutputClause_0fipil2" label="Candidate Groups" name="candidateGroups" typeRef="string" />
+      <rule id="DecisionRule_0xscxqx">
+        <inputEntry id="UnaryTests_1shlo1s">
+          <text>"A"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03y4rad">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ls26mb">
+          <text>"demo"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1eqfiil">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0dvu0x5">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04rmr3b">
+        <inputEntry id="UnaryTests_0r6an39">
+          <text>"B"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0n8xw1y">
+          <text>&lt; 100</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0x5bb17">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1c5ei3a">
+          <text>"user1"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_19x4ijx">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0pxh2nk">
+        <inputEntry id="UnaryTests_0uq96gc">
+          <text>"B"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01fv4yp">
+          <text>&lt; 50</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0zcc3a4">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0lydjem">
+          <text>"user2"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1iyok1v">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_19xdg8z">
+        <inputEntry id="UnaryTests_0kq6ea7">
+          <text>"C"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_149eabt">
+          <text>&gt; 100</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0kku0vx">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0u9yedm">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_11mqnc0">
+          <text>"group1"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1hsx96k">
+        <inputEntry id="UnaryTests_1qz336f">
+          <text>"C"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bxaqew">
+          <text>&gt; 50</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19izu7z">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1tqmp5o">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ubgkf1">
+          <text>"group2"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1ass6h6" name="Request Type" />
+  <inputData id="InputData_12x6te7" name="Amount" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="decide_users">
+        <dc:Bounds height="80" width="180" x="270" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1e6yd6l" dmnElementRef="InputData_1ass6h6">
+        <dc:Bounds height="45" width="125" x="167" y="238" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0il95k4" dmnElementRef="InputData_12x6te7">
+        <dc:Bounds height="45" width="125" x="437" y="238" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1n9za58" dmnElementRef="InformationRequirement_1679byp">
+        <di:waypoint x="230" y="238" />
+        <di:waypoint x="330" y="200" />
+        <di:waypoint x="330" y="180" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0zu4t3t" dmnElementRef="InformationRequirement_02xcwmw">
+        <di:waypoint x="500" y="238" />
+        <di:waypoint x="390" y="200" />
+        <di:waypoint x="390" y="180" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

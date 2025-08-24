@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0s9y3rb" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <decision id="discount_policy" name="Discount Policy" camunda:historyTimeToLive="180">
+    <informationRequirement id="InformationRequirement_0kxy73l">
+      <requiredInput href="#InputData_1ngx3u8" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1vf1czr">
+      <requiredInput href="#InputData_14uy122" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_12avscs" hitPolicy="FIRST">
+      <input id="Input_1" label="Customer Type">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>customerType</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0c2s2m2" label="Amount">
+        <inputExpression id="LiteralExpression_1pcwi9y" typeRef="double">
+          <text>amount</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Discount" name="discount" typeRef="double" />
+      <rule id="DecisionRule_1qlywjy">
+        <inputEntry id="UnaryTests_14ov2uj">
+          <text>"A"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0wefipx">
+          <text>&gt; 2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1u84fuj">
+          <text>25</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_12gmrzt">
+        <inputEntry id="UnaryTests_1lnv68l">
+          <text>"A"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kms59f">
+          <text>&lt;= 2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_07wgqbd">
+          <text>10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1l7782e">
+        <inputEntry id="UnaryTests_1x1rq6h">
+          <text>"B"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cjfc5h">
+          <text>&gt; 2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_166i0fj">
+          <text>20</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0220r8h">
+        <inputEntry id="UnaryTests_0deg9zr">
+          <text>"B"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1jkhtkv">
+          <text>&lt;= 2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1wgm8d1">
+          <text>5</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_126v50q">
+        <inputEntry id="UnaryTests_02fshxg">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_12rlm4k">
+          <text>&gt; 2000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0tqjys1">
+          <text>5</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_16xe5p6">
+        <inputEntry id="UnaryTests_1m6o1e5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0rchwue">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0694jge">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_14uy122" name="Customer Type" />
+  <inputData id="InputData_1ngx3u8" name="Amount" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="discount_policy">
+        <dc:Bounds height="80" width="180" x="250" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ovwxaf" dmnElementRef="InputData_14uy122">
+        <dc:Bounds height="45" width="125" x="158" y="228" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0eal7w7" dmnElementRef="InputData_1ngx3u8">
+        <dc:Bounds height="45" width="125" x="398" y="229" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0yugp4k" dmnElementRef="InformationRequirement_0kxy73l">
+        <di:waypoint x="461" y="229" />
+        <di:waypoint x="370" y="200" />
+        <di:waypoint x="370" y="180" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1d85gow" dmnElementRef="InformationRequirement_1vf1czr">
+        <di:waypoint x="221" y="228" />
+        <di:waypoint x="310" y="200" />
+        <di:waypoint x="310" y="180" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

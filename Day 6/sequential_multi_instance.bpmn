@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0nx5srj" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="sequential_multi_instance" name="sequential_multi_instance" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_124egj4</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_124egj4" sourceRef="StartEvent_1" targetRef="CreateCollectionTask" />
+    <bpmn:userTask id="Task1Task" name="Task 1">
+      <bpmn:incoming>Flow_1ij0pv4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yzqsqc</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true" camunda:collection="#{jsonCollection.elements()}" camunda:elementVariable="item">
+        <bpmn:completionCondition xsi:type="bpmn:tFormalExpression">#{!item.prop("approved").boolValue()}</bpmn:completionCondition>
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_1wnp4xg">
+      <bpmn:incoming>Flow_0yzqsqc</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0yzqsqc" sourceRef="Task1Task" targetRef="Event_1wnp4xg" />
+    <bpmn:scriptTask id="CreateCollectionTask" name="Create Collection" scriptFormat="JavaScript">
+      <bpmn:incoming>Flow_124egj4</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ij0pv4</bpmn:outgoing>
+      <bpmn:script>var SpinValues = Java.type('org.camunda.spin.plugin.variable.SpinValues');
+
+// Create a JSON collection
+var jsonCollection = [
+  {
+    "id": 1,
+    "approved": null
+  },
+  {
+    "id": 2,
+    "approved": null
+  },
+  {
+    "id": 3,
+    "approved": null
+  }
+];
+
+var jsonVariable = SpinValues.jsonValue(JSON.stringify(jsonCollection)).create();
+
+execution.setVariable("jsonCollection", jsonVariable);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1ij0pv4" sourceRef="CreateCollectionTask" targetRef="Task1Task" />
+    <bpmn:textAnnotation id="TextAnnotation_1i2r05o">
+      <bpmn:text>#{!item.prop("approved").boolValue()}
+
+A completionCondition is defined and evaluated whenever an instance finishes.
+If a rejection () occurs, the remaining approvals are no longer required.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1vr4tyw" associationDirection="None" sourceRef="Task1Task" targetRef="TextAnnotation_1i2r05o" />
+    <bpmn:textAnnotation id="TextAnnotation_03z8ubo">
+      <bpmn:text>The created variable 'jsonCollection' is a SpinJsonNode array, so the elements() method is used to obtain a SpinList as camunda:collection requires a Java collection
+
+https://docs.camunda.org/javadoc/camunda-bpm-platform/7.23/org/camunda/spin/json/SpinJsonNode.html#elements()
+https://docs.camunda.org/manual/latest/reference/spin/json/01-reading-json/</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_03qh9gj" associationDirection="None" sourceRef="Task1Task" targetRef="TextAnnotation_03z8ubo" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="sequential_multi_instance">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01l52ks_di" bpmnElement="Task1Task">
+        <dc:Bounds x="410" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1wnp4xg_di" bpmnElement="Event_1wnp4xg">
+        <dc:Bounds x="582" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13ixgww_di" bpmnElement="CreateCollectionTask">
+        <dc:Bounds x="250" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1vr4tyw_di" bpmnElement="Association_1vr4tyw">
+        <di:waypoint x="498" y="200" />
+        <di:waypoint x="519" y="178" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_03qh9gj_di" bpmnElement="Association_03qh9gj">
+        <di:waypoint x="503" y="279" />
+        <di:waypoint x="548" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1i2r05o_di" bpmnElement="TextAnnotation_1i2r05o">
+        <dc:Bounds x="480" y="80" width="270" height="98" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_03z8ubo_di" bpmnElement="TextAnnotation_03z8ubo">
+        <dc:Bounds x="470" y="320" width="450" height="120" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_124egj4_di" bpmnElement="Flow_124egj4">
+        <di:waypoint x="188" y="240" />
+        <di:waypoint x="250" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ij0pv4_di" bpmnElement="Flow_1ij0pv4">
+        <di:waypoint x="350" y="240" />
+        <di:waypoint x="410" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yzqsqc_di" bpmnElement="Flow_0yzqsqc">
+        <di:waypoint x="510" y="240" />
+        <di:waypoint x="582" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
