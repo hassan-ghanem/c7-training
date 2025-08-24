@@ -17,6 +17,7 @@ https://github.com/camunda-community-hub/camunda-platform-7-rest-client-java
 
 DAY 2
 https://docs.camunda.org/manual/latest/user-guide/process-engine/variables/
+https://docs.camunda.org/manual/latest/reference/spin/json/
 https://docs.camunda.org/manual/latest/webapps/tasklist/task-lifecycle/
 https://docs.camunda.org/manual/latest/user-guide/process-engine/external-tasks/
 https://docs.camunda.io/docs/components/best-practices/architecture/extending-human-task-management-c7/#implementing-a-custom-processtask-info-entity
@@ -34,6 +35,12 @@ https://docs.camunda.io/docs/components/best-practices/development/understanding
 https://camunda.com/blog/2019/10/job-executor-what-is-going-on-in-my-process-engine/
 https://docs.camunda.org/manual/latest/user-guide/process-engine/the-job-executor/
 
+Day 6
+https://camunda.github.io/feel-scala/docs/playground/
+https://docs.camunda.org/manual/latest/reference/dmn/decision-table/hit-policy/
+https://docs.camunda.org/manual/latest/user-guide/process-engine/decisions/bpmn-cmmn/#predefined-mapping-of-the-decision-result
+https://camunda.com/blog/2025/02/decision-tables-for-automating-business-rules/
+
 -------------------------------------
 Enable the H2 Console in Spring Boot
 
@@ -50,4 +57,20 @@ http://localhost:8080/h2-console
 
 https://docs.camunda.org/manual/latest/reference/rest/overview/authentication/
 https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#authentication
+https://docs.camunda.org/manual/latest/user-guide/process-engine/authorization-service/
+https://docs.camunda.org/manual/latest/user-guide/process-engine/authorization-service/#default-task-permissions
+
+
+camunda.bpm.run.auth:
+  enabled: true
+
+camunda.bpm.authorization:
+  enabled: true
+
+camunda:
+  bpm:
+    generic-properties:
+      properties:
+        default-user-permission-name-for-task: TASK_WORK
+-------------------------------------
 
