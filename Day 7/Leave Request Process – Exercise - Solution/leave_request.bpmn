@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_17e7bms" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:collaboration id="Collaboration_0yx2mao">
+    <bpmn:participant id="LeaveRequestParticipant" name="Leave Request" processRef="leave_request" />
+    <bpmn:textAnnotation id="TextAnnotation_0h2q3tp">
+      <bpmn:text>In Camunda, throwing a message is not automatically handled by the engine like a signal. Explicit correlation must be implemented.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_04qf3kz" associationDirection="None" sourceRef="RejectionNotificationSentEvent" targetRef="TextAnnotation_0h2q3tp" />
+  </bpmn:collaboration>
+  <bpmn:process id="leave_request" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:laneSet id="LaneSet_0azrv8l">
+      <bpmn:lane id="RequesterLane" name="Requester">
+        <bpmn:flowNodeRef>RequestSubmittedStartEvent</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>CheckLeaveRulesTask</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>RulesPassedGateway</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>AdjustRequestDetailsTask</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UpdateHRRecordTask</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_08wg6mv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>RequestProcessedEndEvent</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1xsvy4x</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1nzlq1n</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ApprovalNotificationSentEvent</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>RejectionNotificationSentEvent</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="DirectManagerLane" name="Direct Manager">
+        <bpmn:flowNodeRef>DirectManagerApprovalTask</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>DirectManagerDecisionGateway</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>N3DaysBoundaryEvent</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="HRLane" name="HR">
+        <bpmn:flowNodeRef>Gateway_1ib3gl6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ReviewTheRequestTask</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_01chpei</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>HRDecisionGateway</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PayrollAdjustmentCallActivity</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="RequestSubmittedStartEvent" name="Request Submitted">
+      <bpmn:outgoing>Flow_1d9s4o6</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:businessRuleTask id="CheckLeaveRulesTask" name="Check Leave Rules" camunda:type="external" camunda:topic="check-leave-rules">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="rulesPassed">#{rulesPassed}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1d9s4o6</bpmn:incoming>
+      <bpmn:incoming>Flow_14xsbab</bpmn:incoming>
+      <bpmn:outgoing>Flow_1960ulk</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:userTask id="DirectManagerApprovalTask" name="Direct Manager Approval">
+      <bpmn:incoming>YesSequenceFlow</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wscfn7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="RulesPassedGateway" name="Rules Passed?" default="YesSequenceFlow">
+      <bpmn:incoming>Flow_1960ulk</bpmn:incoming>
+      <bpmn:outgoing>YesSequenceFlow</bpmn:outgoing>
+      <bpmn:outgoing>NoSequenceFlow</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="DirectManagerDecisionGateway" name="Direct Manager Decision?" default="ApprovedSequenceFlow">
+      <bpmn:incoming>Flow_0wscfn7</bpmn:incoming>
+      <bpmn:outgoing>ApprovedSequenceFlow</bpmn:outgoing>
+      <bpmn:outgoing>ReturnedForAdjustmentSequenceFlow</bpmn:outgoing>
+      <bpmn:outgoing>RejectedSequenceFlow</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="AdjustRequestDetailsTask" name="Adjust Request Details">
+      <bpmn:incoming>ReturnedForAdjustmentSequenceFlow</bpmn:incoming>
+      <bpmn:outgoing>Flow_14xsbab</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="UpdateHRRecordTask" name="Update HR Record" camunda:type="external" camunda:topic="db-execute">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_02jc8ry</bpmn:incoming>
+      <bpmn:outgoing>Flow_18rlmk7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_08wg6mv">
+      <bpmn:incoming>Flow_0ym4665</bpmn:incoming>
+      <bpmn:incoming>Flow_17scx9s</bpmn:incoming>
+      <bpmn:outgoing>Flow_02jc8ry</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="RequestProcessedEndEvent" name="Request Processed">
+      <bpmn:incoming>Flow_18rlmk7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="Gateway_1xsvy4x">
+      <bpmn:incoming>RejectedSequenceFlow</bpmn:incoming>
+      <bpmn:incoming>RejectedSequenceFlow1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0arxkgt</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_1ib3gl6">
+      <bpmn:incoming>NoSequenceFlow</bpmn:incoming>
+      <bpmn:incoming>Flow_0ytster</bpmn:incoming>
+      <bpmn:outgoing>Flow_01ru3vp</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="ReviewTheRequestTask" name="Review the Request">
+      <bpmn:incoming>Flow_01ru3vp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0s5gz1d</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1nzlq1n">
+      <bpmn:incoming>ApprovedSequenceFlow</bpmn:incoming>
+      <bpmn:incoming>Flow_1r4rmgm</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vze0eb</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_01chpei">
+      <bpmn:incoming>ApprovedSequenceFlow1</bpmn:incoming>
+      <bpmn:incoming>Flow_15kpmet</bpmn:incoming>
+      <bpmn:outgoing>Flow_1r4rmgm</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:boundaryEvent id="N3DaysBoundaryEvent" name="3 Days" attachedToRef="DirectManagerApprovalTask">
+      <bpmn:outgoing>Flow_0ytster</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0za1myo">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P3D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1d9s4o6" sourceRef="RequestSubmittedStartEvent" targetRef="CheckLeaveRulesTask" />
+    <bpmn:sequenceFlow id="Flow_14xsbab" sourceRef="AdjustRequestDetailsTask" targetRef="CheckLeaveRulesTask" />
+    <bpmn:sequenceFlow id="Flow_1960ulk" sourceRef="CheckLeaveRulesTask" targetRef="RulesPassedGateway" />
+    <bpmn:sequenceFlow id="YesSequenceFlow" name="Yes" sourceRef="RulesPassedGateway" targetRef="DirectManagerApprovalTask" />
+    <bpmn:sequenceFlow id="Flow_0wscfn7" sourceRef="DirectManagerApprovalTask" targetRef="DirectManagerDecisionGateway" />
+    <bpmn:sequenceFlow id="NoSequenceFlow" name="No" sourceRef="RulesPassedGateway" targetRef="Gateway_1ib3gl6">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{!rulesPassed}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="ApprovedSequenceFlow" name="Approved" sourceRef="DirectManagerDecisionGateway" targetRef="Gateway_1nzlq1n" />
+    <bpmn:sequenceFlow id="ReturnedForAdjustmentSequenceFlow" name="Returned for Adjustment" sourceRef="DirectManagerDecisionGateway" targetRef="AdjustRequestDetailsTask">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{directManagerDecision eq 'returned'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RejectedSequenceFlow" name="Rejected" sourceRef="DirectManagerDecisionGateway" targetRef="Gateway_1xsvy4x">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{directManagerDecision eq 'rejected'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_02jc8ry" sourceRef="Gateway_08wg6mv" targetRef="UpdateHRRecordTask" />
+    <bpmn:sequenceFlow id="Flow_18rlmk7" sourceRef="UpdateHRRecordTask" targetRef="RequestProcessedEndEvent" />
+    <bpmn:sequenceFlow id="Flow_0vze0eb" sourceRef="Gateway_1nzlq1n" targetRef="ApprovalNotificationSentEvent" />
+    <bpmn:sequenceFlow id="Flow_0arxkgt" sourceRef="Gateway_1xsvy4x" targetRef="RejectionNotificationSentEvent" />
+    <bpmn:sequenceFlow id="RejectedSequenceFlow1" name="Rejected" sourceRef="HRDecisionGateway" targetRef="Gateway_1xsvy4x">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{hrDecision eq 'rejected'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0ytster" sourceRef="N3DaysBoundaryEvent" targetRef="Gateway_1ib3gl6" />
+    <bpmn:sequenceFlow id="Flow_01ru3vp" sourceRef="Gateway_1ib3gl6" targetRef="ReviewTheRequestTask" />
+    <bpmn:sequenceFlow id="Flow_0s5gz1d" sourceRef="ReviewTheRequestTask" targetRef="HRDecisionGateway" />
+    <bpmn:sequenceFlow id="ApprovedSequenceFlow1" name="Approved" sourceRef="HRDecisionGateway" targetRef="Gateway_01chpei" />
+    <bpmn:sequenceFlow id="UnpaidLeaveIdentifiedSequenceFlow" name="Unpaid Leave Identified" sourceRef="HRDecisionGateway" targetRef="PayrollAdjustmentCallActivity">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{hrDecision eq 'upaidLeaveIdentified'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1r4rmgm" sourceRef="Gateway_01chpei" targetRef="Gateway_1nzlq1n" />
+    <bpmn:sequenceFlow id="Flow_15kpmet" sourceRef="PayrollAdjustmentCallActivity" targetRef="Gateway_01chpei" />
+    <bpmn:exclusiveGateway id="HRDecisionGateway" name="HR Decision?" default="ApprovedSequenceFlow1">
+      <bpmn:incoming>Flow_0s5gz1d</bpmn:incoming>
+      <bpmn:outgoing>ApprovedSequenceFlow1</bpmn:outgoing>
+      <bpmn:outgoing>RejectedSequenceFlow1</bpmn:outgoing>
+      <bpmn:outgoing>UnpaidLeaveIdentifiedSequenceFlow</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="PayrollAdjustmentCallActivity" name="Payroll Adjustment" calledElement="payroll_adjustment">
+      <bpmn:incoming>UnpaidLeaveIdentifiedSequenceFlow</bpmn:incoming>
+      <bpmn:outgoing>Flow_15kpmet</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_0ym4665" sourceRef="ApprovalNotificationSentEvent" targetRef="Gateway_08wg6mv" />
+    <bpmn:sequenceFlow id="Flow_17scx9s" sourceRef="RejectionNotificationSentEvent" targetRef="Gateway_08wg6mv" />
+    <bpmn:intermediateThrowEvent id="ApprovalNotificationSentEvent" name="Approval Notification Sent">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="to">xx@mail.com</camunda:inputParameter>
+          <camunda:inputParameter name="emailSubject">Request Approved</camunda:inputParameter>
+          <camunda:inputParameter name="emailBody">Your request has been approved</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vze0eb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ym4665</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_101q8mu" camunda:expression="#{execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#39;send_email_msg&#39;).setVariable(&#34;to&#34;, to).setVariable(&#34;emailSubject&#34;, emailSubject).setVariable(&#34;emailBody&#34;, emailBody).correlate()}" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateThrowEvent id="RejectionNotificationSentEvent" name="Rejection Notification Sent">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="to">xx@mail.com</camunda:inputParameter>
+          <camunda:inputParameter name="emailSubject">Request Rejected</camunda:inputParameter>
+          <camunda:inputParameter name="emailBody">Your request has been rejected</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0arxkgt</bpmn:incoming>
+      <bpmn:outgoing>Flow_17scx9s</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_03ntxld" camunda:expression="#{execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#39;send_email_msg&#39;).setVariable(&#34;to&#34;, to).setVariable(&#34;emailSubject&#34;, emailSubject).setVariable(&#34;emailBody&#34;, emailBody).correlate()}" />
+    </bpmn:intermediateThrowEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0yx2mao">
+      <bpmndi:BPMNShape id="Participant_0y01dgp_di" bpmnElement="LeaveRequestParticipant" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="2040" height="860" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_185sovr_di" bpmnElement="HRLane" isHorizontal="true">
+        <dc:Bounds x="190" y="620" width="2010" height="320" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1b1npke_di" bpmnElement="DirectManagerLane" isHorizontal="true">
+        <dc:Bounds x="190" y="395" width="2010" height="225" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_06eqsto_di" bpmnElement="RequesterLane" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="2010" height="315" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="RequestSubmittedStartEvent">
+        <dc:Bounds x="262" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="255" y="295" width="50" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gvepmn_di" bpmnElement="CheckLeaveRulesTask">
+        <dc:Bounds x="380" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pam9vc_di" bpmnElement="DirectManagerApprovalTask">
+        <dc:Bounds x="780" y="470" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1ejbh5b_di" bpmnElement="RulesPassedGateway" isMarkerVisible="true">
+        <dc:Bounds x="565" y="245" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="503" y="233" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1763ey0_di" bpmnElement="DirectManagerDecisionGateway" isMarkerVisible="true">
+        <dc:Bounds x="965" y="485" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="901" y="466" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03odr4m_di" bpmnElement="AdjustRequestDetailsTask">
+        <dc:Bounds x="940" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08tueq5_di" bpmnElement="UpdateHRRecordTask">
+        <dc:Bounds x="1910" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_08wg6mv_di" bpmnElement="Gateway_08wg6mv" isMarkerVisible="true">
+        <dc:Bounds x="1775" y="145" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04w7zvh_di" bpmnElement="RequestProcessedEndEvent">
+        <dc:Bounds x="2092" y="152" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2085" y="195" width="52" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1xsvy4x_di" bpmnElement="Gateway_1xsvy4x" isMarkerVisible="true">
+        <dc:Bounds x="1295" y="245" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1ib3gl6_di" bpmnElement="Gateway_1ib3gl6" isMarkerVisible="true">
+        <dc:Bounds x="825" y="765" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0y8bkeq_di" bpmnElement="ReviewTheRequestTask">
+        <dc:Bounds x="940" y="750" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1nzlq1n_di" bpmnElement="Gateway_1nzlq1n" isMarkerVisible="true">
+        <dc:Bounds x="1455" y="145" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_01chpei_di" bpmnElement="Gateway_01chpei" isMarkerVisible="true">
+        <dc:Bounds x="1455" y="765" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1d11cr8_di" bpmnElement="HRDecisionGateway" isMarkerVisible="true">
+        <dc:Bounds x="1145" y="765" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1076" y="753" width="68" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x40oj7_di" bpmnElement="PayrollAdjustmentCallActivity">
+        <dc:Bounds x="1310" y="830" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1akl672_di" bpmnElement="ApprovalNotificationSentEvent">
+        <dc:Bounds x="1622" y="152" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1601" y="195" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0lwze0b_di" bpmnElement="RejectionNotificationSentEvent">
+        <dc:Bounds x="1622" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1600" y="295" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0v5vjg5_di" bpmnElement="N3DaysBoundaryEvent">
+        <dc:Bounds x="832" y="532" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="862" y="575" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1d9s4o6_di" bpmnElement="Flow_1d9s4o6">
+        <di:waypoint x="298" y="270" />
+        <di:waypoint x="380" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14xsbab_di" bpmnElement="Flow_14xsbab">
+        <di:waypoint x="990" y="230" />
+        <di:waypoint x="990" y="170" />
+        <di:waypoint x="430" y="170" />
+        <di:waypoint x="430" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1960ulk_di" bpmnElement="Flow_1960ulk">
+        <di:waypoint x="480" y="270" />
+        <di:waypoint x="565" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1x4xina_di" bpmnElement="YesSequenceFlow">
+        <di:waypoint x="615" y="270" />
+        <di:waypoint x="710" y="270" />
+        <di:waypoint x="710" y="510" />
+        <di:waypoint x="780" y="510" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="641" y="253" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wscfn7_di" bpmnElement="Flow_0wscfn7">
+        <di:waypoint x="880" y="510" />
+        <di:waypoint x="965" y="510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nv0fdb_di" bpmnElement="NoSequenceFlow">
+        <di:waypoint x="590" y="295" />
+        <di:waypoint x="590" y="790" />
+        <di:waypoint x="825" y="790" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="598" y="316" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0unun4m_di" bpmnElement="ApprovedSequenceFlow">
+        <di:waypoint x="1015" y="510" />
+        <di:waypoint x="1140" y="510" />
+        <di:waypoint x="1140" y="170" />
+        <di:waypoint x="1455" y="170" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1050" y="486" width="47" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tyh5hv_di" bpmnElement="ReturnedForAdjustmentSequenceFlow">
+        <di:waypoint x="990" y="485" />
+        <di:waypoint x="990" y="310" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="998" y="436" width="63" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0l4wil8_di" bpmnElement="RejectedSequenceFlow">
+        <di:waypoint x="990" y="535" />
+        <di:waypoint x="990" y="580" />
+        <di:waypoint x="1210" y="580" />
+        <di:waypoint x="1210" y="270" />
+        <di:waypoint x="1295" y="270" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1052" y="562" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02jc8ry_di" bpmnElement="Flow_02jc8ry">
+        <di:waypoint x="1825" y="170" />
+        <di:waypoint x="1910" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18rlmk7_di" bpmnElement="Flow_18rlmk7">
+        <di:waypoint x="2010" y="170" />
+        <di:waypoint x="2092" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vze0eb_di" bpmnElement="Flow_0vze0eb">
+        <di:waypoint x="1505" y="170" />
+        <di:waypoint x="1622" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0arxkgt_di" bpmnElement="Flow_0arxkgt">
+        <di:waypoint x="1345" y="270" />
+        <di:waypoint x="1622" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kt8zmf_di" bpmnElement="RejectedSequenceFlow1">
+        <di:waypoint x="1170" y="765" />
+        <di:waypoint x="1170" y="720" />
+        <di:waypoint x="1320" y="720" />
+        <di:waypoint x="1320" y="295" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1221" y="702" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ytster_di" bpmnElement="Flow_0ytster">
+        <di:waypoint x="850" y="568" />
+        <di:waypoint x="850" y="765" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01ru3vp_di" bpmnElement="Flow_01ru3vp">
+        <di:waypoint x="875" y="790" />
+        <di:waypoint x="940" y="790" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0s5gz1d_di" bpmnElement="Flow_0s5gz1d">
+        <di:waypoint x="1040" y="790" />
+        <di:waypoint x="1145" y="790" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a49uu2_di" bpmnElement="ApprovedSequenceFlow1">
+        <di:waypoint x="1195" y="790" />
+        <di:waypoint x="1455" y="790" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1219" y="772" width="47" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1la83aw_di" bpmnElement="UnpaidLeaveIdentifiedSequenceFlow">
+        <di:waypoint x="1170" y="815" />
+        <di:waypoint x="1170" y="870" />
+        <di:waypoint x="1310" y="870" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1210" y="840" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r4rmgm_di" bpmnElement="Flow_1r4rmgm">
+        <di:waypoint x="1480" y="765" />
+        <di:waypoint x="1480" y="195" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15kpmet_di" bpmnElement="Flow_15kpmet">
+        <di:waypoint x="1410" y="870" />
+        <di:waypoint x="1480" y="870" />
+        <di:waypoint x="1480" y="815" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ym4665_di" bpmnElement="Flow_0ym4665">
+        <di:waypoint x="1658" y="170" />
+        <di:waypoint x="1775" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17scx9s_di" bpmnElement="Flow_17scx9s">
+        <di:waypoint x="1658" y="270" />
+        <di:waypoint x="1800" y="270" />
+        <di:waypoint x="1800" y="195" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_04qf3kz_di" bpmnElement="Association_04qf3kz">
+        <di:waypoint x="1656" y="277" />
+        <di:waypoint x="1735" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0h2q3tp_di" bpmnElement="TextAnnotation_0h2q3tp">
+        <dc:Bounds x="1720" y="310" width="230" height="70" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
