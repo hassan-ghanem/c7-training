@@ -41,6 +41,12 @@ https://docs.camunda.org/manual/latest/reference/dmn/decision-table/hit-policy/
 https://docs.camunda.org/manual/latest/user-guide/process-engine/decisions/bpmn-cmmn/#predefined-mapping-of-the-decision-result
 https://camunda.com/blog/2025/02/decision-tables-for-automating-business-rules/
 
+Day 8
+https://migration-analyzer.consulting-sandbox.camunda.cloud/
+https://github.com/camunda-community-hub/camunda-7-to-8-migration-analyzer#local-java-installation
+https://camunda-community-hub.github.io/camunda-7-to-8-code-conversion/
+https://blog.bernd-ruecker.com/writing-good-workers-for-camunda-cloud-61d322cad862
+
 -------------------------------------
 Enable the H2 Console in Spring Boot
 

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:conversion="http://camunda.org/schema/conversion/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0p3b1t1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0" conversion:converterVersion="0.13.3" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:process id="simple_payment_service" name="simple_payment_service" processType="None" isClosed="false" isExecutable="true">
+    <bpmn:extensionElements>
+      <conversion:message severity="INFO">Unused attribute 'historyTimeToLive' on 'process' is removed.</conversion:message>
+    </bpmn:extensionElements>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="={&#10;  &#34;tran_id&#34;: &#34;TR0034&#34;,&#10;  &#34;customerId&#34;: &#34;Ahmed&#34;,&#10;  &#34;amount&#34;: 500.5&#10;}" target="paymentDetails" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1b9j3eb</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1b9j3eb" sourceRef="StartEvent_1" targetRef="ProcessPaymentTask" />
+    <bpmn:serviceTask id="ProcessPaymentTask" name="Process Payment" implementation="##WebService">
+      <bpmn:extensionElements>
+        <conversion:message severity="REVIEW">Attribute 'topic' on 'serviceTask' was mapped. Is set as job type.</conversion:message>
+        <conversion:message severity="INFO">Unused attribute 'type' on 'serviceTask' is removed.</conversion:message>
+        <zeebe:taskDefinition type="process-payment" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1b9j3eb</bpmn:incoming>
+      <bpmn:incoming>Flow_0xyo4rm</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oudg41</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="ExpiredCreditCradBoundaryEvent" name="Expired Credit Crad" attachedToRef="ProcessPaymentTask">
+      <bpmn:extensionElements>
+        <conversion:message severity="WARNING">Attribute 'errorCodeVariable' with value 'errorCode' on 'errorEventDefinition' is not supported.</conversion:message>
+        <conversion:message severity="WARNING">Attribute 'errorMessageVariable' with value 'errorMsg' on 'errorEventDefinition' is not supported.</conversion:message>
+        <conversion:reference>Error_1f0jjo6</conversion:reference>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1lkrgh9</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1uqvve3" errorRef="Error_1f0jjo6" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1lkrgh9" sourceRef="ExpiredCreditCradBoundaryEvent" targetRef="AskCustomerToUpdateCreditCardDetailsTask" />
+    <bpmn:serviceTask id="AskCustomerToUpdateCreditCardDetailsTask" name="Ask Customer to Update Credit Card Details" implementation="##WebService">
+      <bpmn:extensionElements>
+        <conversion:message severity="REVIEW">Attribute 'topic' on 'serviceTask' was mapped. Is set as job type.</conversion:message>
+        <conversion:message severity="INFO">Unused attribute 'type' on 'serviceTask' is removed.</conversion:message>
+        <zeebe:taskDefinition type="send-email" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1lkrgh9</bpmn:incoming>
+      <bpmn:outgoing>Flow_111b2k3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_111b2k3" sourceRef="AskCustomerToUpdateCreditCardDetailsTask" targetRef="WaitForUpdatedDetailsTask" />
+    <bpmn:receiveTask id="WaitForUpdatedDetailsTask" name="Wait for Updated Details" implementation="##WebService" messageRef="Message_2sgfhep">
+      <bpmn:extensionElements>
+        <conversion:reference>Message_2sgfhep</conversion:reference>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_111b2k3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xyo4rm</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:sequenceFlow id="Flow_0xyo4rm" sourceRef="WaitForUpdatedDetailsTask" targetRef="ProcessPaymentTask" />
+    <bpmn:endEvent id="PaymentSucceededEndEvent" name="Payment Succeeded">
+      <bpmn:incoming>Flow_0oudg41</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0oudg41" sourceRef="ProcessPaymentTask" targetRef="PaymentSucceededEndEvent" />
+    <bpmn:boundaryEvent id="N7DaysBoundaryEvent" name="7 Days" attachedToRef="WaitForUpdatedDetailsTask">
+      <bpmn:outgoing>Flow_02g0026</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0j312ls">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P7D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="PaymentFailedEndEvent" name="Payment Failed">
+      <bpmn:incoming>Flow_02g0026</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_02g0026" sourceRef="N7DaysBoundaryEvent" targetRef="PaymentFailedEndEvent" />
+    <bpmn:textAnnotation id="TextAnnotation_0jsjroq">
+      <bpmn:text>'paymentDetails' JSON variable is created using output mappings 
+{
+  "tran_id": "TR0034",
+  "customerId": "Ahmed",
+  "amount": 500.5
+}</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1niqarx" associationDirection="None" sourceRef="StartEvent_1" targetRef="TextAnnotation_0jsjroq" />
+    <bpmn:textAnnotation id="TextAnnotation_0c8mzst">
+      <bpmn:text>correlationKey is set to the expression:
+paymentDetails.tran_id</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0aa2vxj" associationDirection="None" sourceRef="WaitForUpdatedDetailsTask" targetRef="TextAnnotation_0c8mzst" />
+  </bpmn:process>
+  <bpmn:error id="Error_1f0jjo6" name="Payment Failed" errorCode="PAYMENT_FAILED">
+    <bpmn:extensionElements>
+      <conversion:message severity="WARNING">Attribute 'errorMessage' with value 'Payment Failed' on 'error' is not supported.</conversion:message>
+      <conversion:referencedBy>ExpiredCreditCradBoundaryEvent</conversion:referencedBy>
+    </bpmn:extensionElements>
+  </bpmn:error>
+  <bpmn:message id="Message_2sgfhep" name="details_updated_msg">
+    <bpmn:extensionElements>
+      <conversion:message severity="TASK">Please define a correlation key if the message is used in a message catch event.</conversion:message>
+      <conversion:referencedBy>WaitForUpdatedDetailsTask</conversion:referencedBy>
+      <zeebe:subscription correlationKey="=paymentDetails.tran_id" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="simple_payment_service">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="282" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ur4a59_di" bpmnElement="ProcessPaymentTask">
+        <dc:Bounds x="430" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0g1lyk1_di" bpmnElement="AskCustomerToUpdateCreditCardDetailsTask">
+        <dc:Bounds x="570" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06ntmwi_di" bpmnElement="WaitForUpdatedDetailsTask">
+        <dc:Bounds x="730" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1t0kr99_di" bpmnElement="PaymentSucceededEndEvent">
+        <dc:Bounds x="642" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="632" y="145" width="56" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0i51gi7_di" bpmnElement="PaymentFailedEndEvent">
+        <dc:Bounds x="892" y="352" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="872" y="395" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1niqarx_di" bpmnElement="Association_1niqarx">
+        <di:waypoint x="286" y="131" />
+        <di:waypoint x="228" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0aa2vxj_di" bpmnElement="Association_0aa2vxj">
+        <di:waypoint x="810" y="230" />
+        <di:waypoint x="873" y="145" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_13agu36_di" bpmnElement="N7DaysBoundaryEvent">
+        <dc:Bounds x="792" y="292" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="822" y="333" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0uhf4jp_di" bpmnElement="ExpiredCreditCradBoundaryEvent">
+        <dc:Bounds x="482" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="515" y="186" width="70" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1b9j3eb_di" bpmnElement="Flow_1b9j3eb">
+        <di:waypoint x="318" y="120" />
+        <di:waypoint x="430" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lkrgh9_di" bpmnElement="Flow_1lkrgh9">
+        <di:waypoint x="500" y="178" />
+        <di:waypoint x="500" y="270" />
+        <di:waypoint x="570" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_111b2k3_di" bpmnElement="Flow_111b2k3">
+        <di:waypoint x="670" y="270" />
+        <di:waypoint x="730" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xyo4rm_di" bpmnElement="Flow_0xyo4rm">
+        <di:waypoint x="760" y="310" />
+        <di:waypoint x="760" y="370" />
+        <di:waypoint x="460" y="370" />
+        <di:waypoint x="460" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oudg41_di" bpmnElement="Flow_0oudg41">
+        <di:waypoint x="530" y="120" />
+        <di:waypoint x="642" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02g0026_di" bpmnElement="Flow_02g0026">
+        <di:waypoint x="810" y="328" />
+        <di:waypoint x="810" y="370" />
+        <di:waypoint x="892" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0jsjroq_di" bpmnElement="TextAnnotation_0jsjroq">
+        <dc:Bounds x="160" y="180" width="230" height="113" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0c8mzst_di" bpmnElement="TextAnnotation_0c8mzst">
+        <dc:Bounds x="830" y="102" width="260" height="43" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
