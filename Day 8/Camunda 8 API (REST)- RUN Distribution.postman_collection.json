@@ -1,0 +1,1777 @@
+{
+	"info": {
+		"_postman_id": "0e77c627-5537-436e-b9d4-ff570adc29ba",
+		"name": "Camunda 8 API (REST)",
+		"description": "## 🚀 Overview\n\nThe Camunda 8 API is a REST API designed to interact with a Camunda 8 cluster. Requests and responses are in JSON notation.\n\nTake a closer look at Camunda's Camunda 8 API (REST) documentation, and see [the interactive Camunda 8 REST API Explorer](https://docs.camunda.io/docs/next/apis-tools/camunda-api-rest/specifications/camunda-8-rest-api/) for specifications, example requests and responses, and code samples of interacting with the Camunda 8 REST API.\n\nFor SaaS: `https://${REGION}.zeebe.camunda.io:443/${CLUSTER_ID}/v2/`, and for Self-Managed installations: `http://localhost:8080/v2/`.\n\n**Note: The Camunda 8 REST API only supports user tasks managed by Camunda (formerly known as** [<b>Zeebe user tasks</b>](https://docs.camunda.io/docs/next/apis-tools/migration-manuals/migrate-to-camunda-user-tasks/)**, which may still appear as such in your XML content).**\n\n## 💪 What do you need to make it work?\n\n### Authentication\n\nAll requests to the Camunda 8 API require [authentication](https://docs.camunda.io/docs/next/apis-tools/camunda-api-rest/camunda-api-rest-authentication/).\n\nThis Postman collection is configured to automatically handle the authentication process if:\n\n- You are using the SaaS offering of Camunda\n    \n- You provide an API client ID and secret\n    \n\n### 1\\. Configure an API client\n\nTo interact with the Camunda 8 API programmatically, [create client credentials](https://docs.camunda.io/docs/guides/setup-client-connection-credentials/) in your cluster's settings under the **API** tab.\n\n**After client credentials are created, the** **`Client secret`** **is only shown once. Save this** **`Client secret`** **somewhere safe.**\n\n### 2\\. Configure a Postman environment\n\nEnable the \"Camunda SaaS\" environment in Postman. From the Camunda 8 Postman workspace, click the **Environments** tab on the left side of the page, mouse over **Camunda SaaS**, and click the **Set active** checkmark icon. See the [Postman documentation](https://learning.postman.com/docs/sending-requests/variables/managing-environments/) on managing environments for more information.\n\nConfigure the `Current value` of the following variables in the environment:\n\n- `authorizationServerUrl` - The URL of the authorization server. For the SaaS offering, this is `https://login.cloud.camunda.io/oauth/token`.\n    \n- `camundaApiAudience` - The audience associated with the API client. For the SaaS offering, this is `zeebe.camunda.io`.\n    \n- `camundaApiBaseUrl` - The base URL of your Camunda 8 instance. For the SaaS offering, this is `https://${REGION}.zeebe.camunda.io:443/${CLUSTER_ID}/v2/`, and can be captured from your API client connection information in the Camunda 8 Console.\n    \n- `camundaApiClientId` - The client ID of the API client you created in the Camunda 8 Console.\n    \n- `camundaApiClientSecret` - The client secret of the API client you created in the Camunda 8 Console.\n    \n\nWith these values configured, a pre-request script defined on the collection will automatically retrieve an access token before each request, and store it in the `camundaApiBearerToken` variable. If you forget to configure any of these variables, requests will show a failed test with an error message indicating the unconfigured variable.\n\nIf you prefer to manually manage the access token, configure its value in the `camundaApiBearerToken` variable.\n\nThe access token is automatically included in the headers of every request in the collection: `Authorization: Bearer {{camundaApiBearerToken}}`.\n\n### 3\\. Make requests to the API\n\nWith the environment configured, you can now make requests to the Camunda 8 API. The collection includes a variety of requests to get cluster topology, activate or fail jobs, and more.\n\nSee [the Camunda 8 documentation](https://docs.camunda.io/docs/next/apis-tools/camunda-api-rest/specifications/camunda-8-rest-api/) for more information on the available endpoints and their usage.\n\n### Common issues\n\n#### No request made, 1/2 tests pass\n\nIf it appears no request was made, and the **Test Results** tab shows a failing test, there is likely misconfigured data. Common issues include:\n\n- No environment selected.\n    \n- Unconfigured `authorizationServerUrl`, `camundaApiAudience`, `camundaApiBaseUrl`, `camundaApiClientId`, or `camundaApiClientSecret` variables.\n    \n- Improperly formed access token.\n    \n\n#### Error message: \"There was an error in evaluating the Pre-request Script:Error: No data, empty input at 1:1 ^\"\n\nAdditional information can be found in the Postman console. This error may indicate a problem with credentials, such as an invalid `camundaApiClientId` or `camundaApiClientSecret`.\n\n#### 403 Forbidden response\n\nA 403 Forbidden response may indicate insufficient permissions for the API client. Ensure the client has the necessary scopes and permissions to perform the requested operation.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26262732"
+	},
+	"item": [
+		{
+			"name": "Clock",
+			"item": [
+				{
+					"name": "Pin internal clock (alpha)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"timestamp\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/clock",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"clock"
+							]
+						},
+						"description": "Set a precise, static time for the Zeebe engine’s internal clock. When the clock is pinned, it remains at the specified time and does not advance. To change the time, the clock must be pinned again with a new timestamp."
+					},
+					"response": []
+				},
+				{
+					"name": "Reset internal clock (alpha)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/clock/reset",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"clock",
+								"reset"
+							]
+						},
+						"description": "Resets the Zeebe engine’s internal clock to the current system time, enabling it to tick in real-time. This operation is useful for returning the clock to normal behavior after it has been pinned to a specific time."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cluster",
+			"item": [
+				{
+					"name": "Get cluster typology",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/topology",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"topology"
+							]
+						},
+						"description": "**Schema**\n\n**brokers**object\\[\\] _nullable_\n\nA list of brokers that are part of this cluster.\n\nArray \\[\n\n**nodeId** int32\n\nThe unique (within a cluster) node ID for the broker.\n\n**host** string\n\nThe hostname for reaching the broker.\n\n**port** int32\n\nThe port for reaching the broker.\n\n**partitions** object\\[\\]\n\n**version** string\n\nThe broker version.\n\n\\]\n\n**clusterSize** int32 _nullable_\n\nThe number of brokers in the cluster.\n\n**partitionsCount** int32 _nullable_\n\nThe number of partitions are spread across the cluster.\n\n**replicationFactor** int32 _nullable_\n\nThe configured replication factor for this cluster.\n\n**gatewayVersion** string _nullable_\n\nThe version of the Zeebe Gateway."
+					},
+					"response": [
+						{
+							"name": "GetClusterTypologyResponse",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{camundaApiBaseUrl}}/topology",
+									"host": [
+										"{{camundaApiBaseUrl}}"
+									],
+									"path": [
+										"topology"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 12 May 2025 13:17:59 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"brokers\": [\n        {\n            \"nodeId\": 0,\n            \"host\": \"172.20.0.5\",\n            \"port\": 26501,\n            \"partitions\": [\n                {\n                    \"partitionId\": 1,\n                    \"role\": \"leader\",\n                    \"health\": \"healthy\"\n                }\n            ],\n            \"version\": \"8.7.2\"\n        }\n    ],\n    \"clusterSize\": 1,\n    \"partitionsCount\": 1,\n    \"replicationFactor\": 1,\n    \"gatewayVersion\": \"8.7.2\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Decision definition",
+			"item": [
+				{
+					"name": "Query decision definitions (alpha)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"filter\": {\n    \"decisionKey\": 0,\n    \"dmnDecisionId\": \"string\",\n    \"dmnDecisionName\": \"string\",\n    \"version\": 0,\n    \"dmnDecisionRequirementsId\": \"string\",\n    \"decisionRequirementsKey\": 0,\n    \"tenantId\": \"string\"\n  },\n  \"sort\": [\n    {\n      \"field\": \"string\",\n      \"order\": \"asc\"\n    }\n  ],\n  \"page\": {\n    \"from\": 0,\n    \"limit\": 0,\n    \"searchAfter\": [\n      {}\n    ],\n    \"searchBefore\": [\n      {}\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/decision-definitions/search",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"decision-definitions",
+								"search"
+							]
+						},
+						"description": "**Schema**\n\n**page** object\n\n**totalItems** int64\n\n**firstSortValues** object\\[\\]\n\n**lastSortValues** object\\[\\]\n\n**items** object\\[\\]\n\nArray \\[\n\n**decisionDefinitionKey** int64\n\nThe assigned key, which acts as a unique identifier for this decision definition.\n\n**decisionDefinitionId** string\n\nThe DMN id of the decision definition.\n\n**decisionDefinitionName** string\n\nThe DMN name of the decision definition.\n\n**version** int32\n\nThe assigned version of the decision definition.\n\n**decisionRequirementsId** string\n\nthe DMN id of the decision requirements graph that the decision definition is part of.\n\n**decisionRequirementsKey** int64\n\nThe assigned key of the decision requirements graph that the decision definition is part of.\n\n**tenantId** string\n\nThe tenant id of the decision definition.\n\n\\]"
+					},
+					"response": []
+				},
+				{
+					"name": "Get decision definition XML (alpha)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/decision-definitions/:decisionKey/xml",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"decision-definitions",
+								":decisionKey",
+								"xml"
+							],
+							"variable": [
+								{
+									"key": "decisionKey",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Evaluate decision",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"decisionDefinitionKey\": 0,\n  \"variables\": {},\n  \"tenantId\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/decision-definitions/evaluation",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"decision-definitions",
+								"evaluation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Decision instance",
+			"item": [
+				{
+					"name": "Query decision instances (alpha)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"filter\": {\n    \"key\": 0,\n    \"evaluationFailure\": \"string\",\n    \"processDefinitionKey\": 0,\n    \"processInstanceKey\": 0,\n    \"decisionDefinitionKey\": 0,\n    \"decisionDefinitionId\": \"string\",\n    \"decisionDefinitionName\": \"string\",\n    \"decisionDefinitionVersion\": 0,\n    \"tenantId\": \"string\"\n  },\n  \"sort\": [\n    {\n      \"field\": \"string\",\n      \"order\": \"asc\"\n    }\n  ],\n  \"page\": {\n    \"from\": 0,\n    \"limit\": 0,\n    \"searchAfter\": [\n      {}\n    ],\n    \"searchBefore\": [\n      {}\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/decision-instances/search",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"decision-instances",
+								"search"
+							]
+						},
+						"description": "Search for decision instances based on given criteria.\n\n**Schema**\n\n**page** object\n\n**totalItems** int64\n\n**firstSortValues** object\\[\\]\n\n**lastSortValues** object\\[\\]\n\n**items** object\\[\\]\n\nArray \\[\n\n**key** int64\n\nThe key of the decision instance.\n\n**state** DecisionInstanceStateEnum\n\n**Possible values:** \\[`EVALUATED`, `FAILED`, `UNKNOWN`, `UNSPECIFIED`\\]\n\nThe state of the decision instance.\n\n**evaluationDate** date-time\n\nThe evaluation date of the decision instance.\n\n**evaluationFailure** string\n\nThe evaluation failure of the decision instance.\n\n**processDefinitionKey** int64\n\nThe key of the process definition.\n\n**processInstanceKey** int64\n\nThe key of the process instance.\n\n**decisionDefinitionKey** int64\n\nThe key of the decision.\n\n**decisionDefinitionId** string\n\nThe ID of the DMN decision.\n\n**decisionDefinitionName** string\n\nThe name of the DMN decision.\n\n**decisionDefinitionVersion** int32\n\nThe version of the decision.\n\n**decisionDefinitionType** DecisionInstanceTypeEnum\n\n**Possible values:** \\[`DECISION`, `DECISION_TABLE`, `LITERAL_EXPRESSION`, `RELATION`, `UNSPECIFIED`, `UNKNOWN`\\]\n\nThe type of the decision.\n\n**result** string\n\nThe result of the decision instance.\n\n**tenantId** string\n\nThe tenant ID of the decision instance.\n\n\\]"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Decision requirements",
+			"item": [
+				{
+					"name": "Query decision requirements (alpha)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"filter\": {\n    \"decisionRequirementsKey\": 0,\n    \"dmnDecisionRequirementsName\": \"string\",\n    \"version\": 0,\n    \"dmnDecisionRequirementsId\": \"string\",\n    \"tenantId\": \"string\"\n  },\n  \"sort\": [\n    {\n      \"field\": \"string\",\n      \"order\": \"asc\"\n    }\n  ],\n  \"page\": {\n    \"from\": 0,\n    \"limit\": 0,\n    \"searchAfter\": [\n      {}\n    ],\n    \"searchBefore\": [\n      {}\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/decision-requirements/search",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"decision-requirements",
+								"search"
+							]
+						},
+						"description": "Search for decision requirements based on given criteria.\n\n**Schema**\n\n**page** object\n\n**totalItems** int64\n\n**firstSortValues** object\\[\\]\n\n**lastSortValues** object\\[\\]\n\n**items** object\\[\\]\n\nArray \\[\n\n**decisionRequirementsKey** int64\n\nThe assigned key, which acts as a unique identifier for this decision requirements.\n\n**decisionRequirementsName** string\n\nThe DMN name of the decision requirements.\n\n**version** int32\n\nThe assigned version of the decision requirements.\n\n**decisionRequirementsId** string\n\nthe DMN id of the decision requirements.\n\n**resourceName** string\n\nThe name of the resource from which this decision requirements was parsed.\n\n**tenantId** string\n\nThe tenant ID of the decision requirements.\n\n\\]"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Documents",
+			"item": [
+				{
+					"name": "Upload document",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/documents",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"documents"
+							]
+						},
+						"description": "Upload a document to the Camunda 8 cluster.\n\nNote that this currently only supports an in-memory document store, which is not meant for production use.\n\n**Schema**\n\n**documentType** string\n\n**Possible values:** \\[`camunda`\\]\n\nDocument discriminator. Always set to \"camunda\".\n\n**storeId** string\n\nThe ID of the document store.\n\n**documentId** string\n\nThe ID of the document.\n\n**metadata** object\n\n**contentType** string\n\nThe content type of the document.\n\n**fileName** string\n\nThe name of the file.\n\n**expiresAt** date-time\n\nThe date and time when the document expires.\n\n**size** int64\n\nThe size of the document in bytes.\n\n**property name**\\* any\n\nAdditional properties allowed."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload multiple documents",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/documents/batch",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"documents",
+								"batch"
+							]
+						},
+						"description": "Upload multiple documents to the Camunda 8 cluster.\n\nThe caller must provide a file name for each document, which will be used in case of a multi-status response to identify which documents failed to upload. The file name can be provided in the `Content-Disposition` header of the file part or in the `filename` field of the metadata part. If both are provided, the `filename` field takes precedence.\n\nIn case of a multi-status response, the response body will contain a list of `DocumentBatchProblemDetail` objects, each of which contains the file name of the document that failed to upload and the reason for the failure. The client can choose to retry the whole batch or individual documents based on the response.\n\nNote that this currently only supports an in-memory document store, which is not meant for production use."
+					},
+					"response": []
+				},
+				{
+					"name": "Download document",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/documents/:documentId",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"documents",
+								":documentId"
+							],
+							"variable": [
+								{
+									"key": "documentId",
+									"value": ""
+								}
+							]
+						},
+						"description": "Download a document from the Camunda 8 cluster.\n\nNote that this currently only supports an in-memory document store, which is not meant for production use."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete document",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/documents/:documentId",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"documents",
+								":documentId"
+							],
+							"variable": [
+								{
+									"key": "documentId",
+									"value": ""
+								}
+							]
+						},
+						"description": "Delete a document from the Camunda 8 cluster.\n\nNote that this currently only supports an in-memory document store, which is not meant for production use."
+					},
+					"response": []
+				},
+				{
+					"name": "Create document link",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"expiresAt\": \"2024-09-16T07:02:41.429Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/document/:documentId/links",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"document",
+								":documentId",
+								"links"
+							],
+							"variable": [
+								{
+									"key": "documentId",
+									"value": ""
+								}
+							]
+						},
+						"description": "Create a link to a document in the Camunda 8 cluster.\n\nNote that this currently only supports an in-memory document store, which is not meant for production use.\n\n**Schema**\n\n**url** string\n\nThe link to the document.\n\n**expiresAt** date-time\n\nThe date and time when the link expires."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Element instance",
+			"item": [
+				{
+					"name": "Update element instance variables",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"variables\": {},\n  \"local\": false,\n  \"operationReference\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/element-instances/:elementInstanceKey/variables",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"element-instances",
+								":elementInstanceKey",
+								"variables"
+							],
+							"variable": [
+								{
+									"key": "elementInstanceKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Updates all the variables of a particular scope (for example, process instance, flow element instance) with the given variable data. Specify the element instance in the `elementInstanceKey` parameter."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Flow node instance",
+			"item": [
+				{
+					"name": "Query flow node instances (alpha)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"filter\": {\n        \"state\": \"string\",\n        \"type\": \"string\",\n        \"flowNodeId\": \"string\",\n        \"flowNodeName\": \"string\",\n        \"treePath\": \"string\",\n        \"incident\": true,\n        \"tenantId\": \"string\",\n        \"flowNodeInstanceKey\": \"string\",\n        \"processInstanceKey\": \"string\",\n        \"processDefinitionKey\": \"string\",\n        \"incidentKey\": \"string\"\n    },\n    \"sort\": [\n        {\n            \"field\": \"string\",\n            \"order\": \"asc\"\n        }\n    ],\n    \"page\": {\n        \"from\": 0,\n        \"limit\": 0,\n        \"searchAfter\": [\n            {}\n        ],\n        \"searchBefore\": [\n            {}\n        ]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/flownode-instances/search",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"flownode-instances",
+								"search"
+							]
+						},
+						"description": "Search for flow node instances based on given criteria.\n\n**Schema**\n\n**page** object\n\n**totalItems** int64\n\n**firstSortValues** object\\[\\]\n\n**lastSortValues** object\\[\\]\n\n**items** object\\[\\]\n\nArray \\[\n\n**flowNodeInstanceKey** int64\n\n**processInstanceKey** int64\n\n**processDefinitionKey** int64\n\n**startDate** string\n\n**endDate** string\n\n**flowNodeId** string\n\n**flowNodeName** string\n\n**treePath** string\n\n**type** string\n\n**state** string\n\n**incident** boolean\n\n**incidentKey** int64\n\n**tenantId** string\n\n\\]"
+					},
+					"response": [
+						{
+							"name": "QueryFlowNodeInstancesResponse",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{camundaApiBaseUrl}}/flownode-instances/search",
+									"host": [
+										"{{camundaApiBaseUrl}}"
+									],
+									"path": [
+										"flownode-instances",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 12 May 2025 13:15:19 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"items\": [\n        {\n            \"flowNodeInstanceKey\": \"2251799813687401\",\n            \"processInstanceKey\": \"2251799813687399\",\n            \"processDefinitionKey\": \"2251799813687152\",\n            \"startDate\": \"2025-05-12T09:06:54.274+0000\",\n            \"endDate\": \"2025-05-12T09:06:54.274+0000\",\n            \"flowNodeId\": \"StartEvent_1\",\n            \"treePath\": \"2251799813687399/2251799813687401\",\n            \"type\": \"START_EVENT\",\n            \"state\": \"COMPLETED\",\n            \"incident\": false,\n            \"tenantId\": \"<default>\"\n        },\n        {\n            \"flowNodeInstanceKey\": \"2251799813687403\",\n            \"processInstanceKey\": \"2251799813687399\",\n            \"processDefinitionKey\": \"2251799813687152\",\n            \"startDate\": \"2025-05-12T09:06:54.274+0000\",\n            \"endDate\": \"2025-05-12T09:32:04.278+0000\",\n            \"flowNodeId\": \"Activity_1e70p2s\",\n            \"treePath\": \"2251799813687399/2251799813687403\",\n            \"type\": \"USER_TASK\",\n            \"state\": \"COMPLETED\",\n            \"incident\": false,\n            \"tenantId\": \"<default>\"\n        },\n        {\n            \"flowNodeInstanceKey\": \"2251799813688928\",\n            \"processInstanceKey\": \"2251799813687399\",\n            \"processDefinitionKey\": \"2251799813687152\",\n            \"startDate\": \"2025-05-12T09:32:04.278+0000\",\n            \"flowNodeId\": \"Activity_1kc4q08\",\n            \"treePath\": \"2251799813687399/2251799813688928\",\n            \"type\": \"USER_TASK\",\n            \"state\": \"ACTIVE\",\n            \"incident\": false,\n            \"tenantId\": \"<default>\"\n        },\n        {\n            \"flowNodeInstanceKey\": \"2251799813689108\",\n            \"processInstanceKey\": \"2251799813689106\",\n            \"processDefinitionKey\": \"2251799813689085\",\n            \"startDate\": \"2025-05-12T09:33:36.836+0000\",\n            \"endDate\": \"2025-05-12T09:33:36.836+0000\",\n            \"flowNodeId\": \"StartEvent_1\",\n            \"treePath\": \"2251799813689106/2251799813689108\",\n            \"type\": \"START_EVENT\",\n            \"state\": \"COMPLETED\",\n            \"incident\": false,\n            \"tenantId\": \"<default>\"\n        },\n        {\n            \"flowNodeInstanceKey\": \"2251799813689110\",\n            \"processInstanceKey\": \"2251799813689106\",\n            \"processDefinitionKey\": \"2251799813689085\",\n            \"startDate\": \"2025-05-12T09:33:36.836+0000\",\n            \"flowNodeId\": \"Activity_1e70p2s\",\n            \"treePath\": \"2251799813689106/2251799813689110\",\n            \"type\": \"USER_TASK\",\n            \"state\": \"ACTIVE\",\n            \"incident\": false,\n            \"tenantId\": \"<default>\"\n        }\n    ],\n    \"page\": {\n        \"totalItems\": 5,\n        \"firstSortValues\": [],\n        \"lastSortValues\": [\n            2251799813689110\n        ]\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Incident",
+			"item": [
+				{
+					"name": "Resolve incident",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/incidents/:incidentKey/resolution",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"incidents",
+								":incidentKey",
+								"resolution"
+							],
+							"variable": [
+								{
+									"key": "incidentKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Marks the incident as resolved; most likely a call to Update job will be necessary to reset the job’s retries, followed by this call."
+					},
+					"response": []
+				},
+				{
+					"name": "Query incidents",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"filter\": {\n    \"key\": 0,\n    \"processDefinitionKey\": 0,\n    \"processInstanceKey\": 0,\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"flowNodeId\": \"string\",\n    \"flowNodeInstanceId\": \"string\",\n    \"state\": \"string\",\n    \"jobKey\": 0,\n    \"tenantId\": \"string\",\n    \"hasActiveOperation\": true\n  },\n  \"sort\": [\n    {\n      \"field\": \"string\",\n      \"order\": \"asc\"\n    }\n  ],\n  \"page\": {\n    \"from\": 0,\n    \"limit\": 0,\n    \"searchAfter\": [\n      {}\n    ],\n    \"searchBefore\": [\n      {}\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/incidents/search",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"incidents",
+								"search"
+							]
+						},
+						"description": "Search for incidents based on given criteria.\n\n**Schema**\n\n**page** object\n\n**totalItems** int64\n\n**firstSortValues** object\\[\\]\n\n**lastSortValues** object\\[\\]\n\n**items** object\\[\\]\n\nArray \\[\n\n**key** int64\n\nThe assigned key, which acts as a unique identifier for this incident.\n\n**processDefinitionKey** int64\n\nThe process definition key associated to this incident.\n\n**processDefinitionId** string\n\nThe bpmn process id associated to this incident.\n\n**processInstanceKey** int64\n\nThe process instance key associated to this incident.\n\n**errorType** string\n\n**Possible values:** \\[`UNSPECIFIED`, `UNKNOWN`, `IO_MAPPING_ERROR`, `JOB_NO_RETRIES`, `CONDITION_ERROR`, `EXTRACT_VALUE_ERROR`, `CALLED_ELEMENT_ERROR`, `UNHANDLED_ERROR_EVENT`, `MESSAGE_SIZE_EXCEEDED`, `CALLED_DECISION_ERROR`, `DECISION_EVALUATION_ERROR`, `FORM_NOT_FOUND`\\]\n\nIncident error type with a defined set of values.\n\n**errorMessage** string\n\nError message which describes the error in more detail.\n\n**flowNodeId** string\n\nThe flow node id associated to this incident.\n\n**flowNodeInstanceKey** int64\n\nThe flow node instance key associated to this incident.\n\n**creationTime** date-time\n\nDate of incident creation.\n\n**state** string\n\n**Possible values:** \\[`ACTIVE`, `MIGRATED`, `RESOLVED`, `PENDING`\\]\n\nState of this incident with a defined set of values.\n\n**jobKey** int64\n\nThe job key, if exists, associated with this incident.\n\n**treePath** string\n\nThe path from process instance via flow node ids and flow node instance keys leading to this incident.\n\n**tenantId** string\n\nThe tenant id of the incident.\n\n\\]"
+					},
+					"response": []
+				},
+				{
+					"name": "Get incident by key",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/incidents/:incidentKey",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"incidents",
+								":incidentKey"
+							],
+							"variable": [
+								{
+									"key": "incidentKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Returns incident as JSON.\n\n**Schema**\n\n**key** int64\n\nThe assigned key, which acts as a unique identifier for this incident.\n\n**processDefinitionKey** int64\n\nThe process definition key associated to this incident.\n\n**processDefinitionId** string\n\nThe bpmn process id associated to this incident.\n\n**processInstanceKey** int64\n\nThe process instance key associated to this incident.\n\n**errorType** string\n\n**Possible values:** \\[`UNSPECIFIED`, `UNKNOWN`, `IO_MAPPING_ERROR`, `JOB_NO_RETRIES`, `CONDITION_ERROR`, `EXTRACT_VALUE_ERROR`, `CALLED_ELEMENT_ERROR`, `UNHANDLED_ERROR_EVENT`, `MESSAGE_SIZE_EXCEEDED`, `CALLED_DECISION_ERROR`, `DECISION_EVALUATION_ERROR`, `FORM_NOT_FOUND`\\]\n\nIncident error type with a defined set of values.\n\n**errorMessage** string\n\nError message which describes the error in more detail.\n\n**flowNodeId** string\n\nThe flow node id associated to this incident.\n\n**flowNodeInstanceKey** int64\n\nThe flow node instance key associated to this incident.\n\n**creationTime** date-time\n\nDate of incident creation.\n\n**state** string\n\n**Possible values:** \\[`ACTIVE`, `MIGRATED`, `RESOLVED`, `PENDING`\\]\n\nState of this incident with a defined set of values.\n\n**jobKey** int64\n\nThe job key, if exists, associated with this incident.\n\n**treePath** string\n\nThe path from process instance via flow node ids and flow node instance keys leading to this incident.\n\n**tenantId** string\n\nThe tenant id of the incident."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Job",
+			"item": [
+				{
+					"name": "Activate jobs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"string\",\n  \"worker\": \"string\",\n  \"timeout\": 0,\n  \"maxJobsToActivate\": 0,\n  \"fetchVariable\": [\n    \"string\"\n  ],\n  \"requestTimeout\": 0,\n  \"tenantIds\": [\n    \"string\"\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/jobs/activation",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"jobs",
+								"activation"
+							]
+						},
+						"description": "Iterate through all known partitions and activate jobs up to the requested maximum.\n\n**Schema**\n\n**jobs** object\\[\\]\n\nArray \\[\n\n**key** int64\n\nthe key, a unique identifier for the job\n\n**type** string\n\nthe type of the job (should match what was requested)\n\n**processInstanceKey** int64\n\nthe job's process instance key\n\n**processDefinitionId** string\n\nthe bpmn process ID of the job's process definition\n\n**processDefinitionVersion** int32\n\nthe version of the job's process definition\n\n**processDefinitionKey** int64\n\nthe key of the job's process definition\n\n**elementId** string\n\nthe associated task element ID\n\n**elementInstanceKey** int64\n\nthe unique key identifying the associated task, unique within the scope of the process instance\n\n**customHeaders** object\n\na set of custom headers defined during modelling; returned as a serialized JSON document\n\n**property name**\\* any\n\nAdditional properties allowed.\n\n**worker** string\n\nthe name of the worker which activated this job\n\n**retries** int32\n\nthe amount of retries left to this job (should always be positive)\n\n**deadline** int64\n\nwhen the job can be activated again, sent as a UNIX epoch timestamp\n\n**variables** object\n\nAll variables visible to the task scope, computed at activation time\n\n**property name**\\* any\n\nAdditional properties allowed.\n\n**tenantId** string\n\nThe ID of the tenant that owns the job\n\n\\]"
+					},
+					"response": []
+				},
+				{
+					"name": "Fail job",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retries\": 1,\n  \"retryBackOff\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/jobs/:jobKey/failure",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"jobs",
+								":jobKey",
+								"failure"
+							],
+							"variable": [
+								{
+									"key": "jobKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Mark the job as failed"
+					},
+					"response": []
+				},
+				{
+					"name": "Complete job",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/jobs/:jobKey/completion",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"jobs",
+								":jobKey",
+								"completion"
+							],
+							"variable": [
+								{
+									"key": "jobKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Complete a job with the given payload, which allows completing the associated service task."
+					},
+					"response": []
+				},
+				{
+					"name": "Report error for job",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"errorCode\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/jobs/:jobKey/error",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"jobs",
+								":jobKey",
+								"error"
+							],
+							"variable": [
+								{
+									"key": "jobKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Reports a business error (i.e. non-technical) that occurs while processing a job."
+					},
+					"response": []
+				},
+				{
+					"name": "Update a job",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"changeset\": {\n    \"retries\": 0,\n    \"timeout\": 0\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/jobs/:jobKey",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"jobs",
+								":jobKey"
+							],
+							"variable": [
+								{
+									"key": "jobKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Update a job with the given key."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "License",
+			"item": [
+				{
+					"name": "Get status of Camunda license",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/license",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"license"
+							]
+						},
+						"description": "Obtains the status of the current Camunda license\n\n**Schema**\n\n**validLicense** boolean\n\nTrue if the Camunda license is valid, false if otherwise\n\n**licenseType** string\n\nWill return the license type property of the Camunda license"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Message",
+			"item": [
+				{
+					"name": "Publish a message",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"string\",\n  \"correlationKey\": \"string\",\n  \"timeToLive\": 0,\n  \"messageId\": \"string\",\n  \"variables\": {},\n  \"tenantId\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/messages/publication",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"messages",
+								"publication"
+							]
+						},
+						"description": "Publishes a single message. Messages are published to specific partitions computed from their correlation keys. Messages can be buffered. The endpoint does not wait for a correlation result. Use the message correlation endpoint for such use cases.\n\n**Schema**\n\n**messageKey** int64\n\nThe key of the message\n\n**tenantId** string\n\nThe tenant ID of the message."
+					},
+					"response": []
+				},
+				{
+					"name": "Correlate a message",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"string\",\n  \"correlationKey\": \"string\",\n  \"variables\": {},\n  \"tenantId\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/messages/correlation",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"messages",
+								"correlation"
+							]
+						},
+						"description": "Publishes a message and correlates it to a subscription. If correlation is successful it will return the first process instance key the message correlated with. The message is not buffered. Use the publish message endpoint to send messages that can be buffered.\n\n**Schema**\n\n**messageKey** int64\n\nThe key of the correlated message\n\n**tenantId** string\n\nThe tenant ID of the correlated message\n\n**processInstanceKey** int64\n\nThe key of the first process instance the message correlated with"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Process instance",
+			"item": [
+				{
+					"name": "Query process instances (alpha)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"filter\": {\n        \"running\": true,\n        \"active\": true,\n        \"incidents\": true,\n        \"finished\": true,\n        \"completed\": true,\n        \"canceled\": true,\n        \"retriesLeft\": true,\n        \"errorMessage\": \"string\",\n        \"activityId\": \"string\",\n        \"startDate\": \"2024-07-29T15:51:28.071Z\",\n        \"endDate\": \"2024-07-29T15:51:28.071Z\",\n        \"bpmnProcessId\": \"string\",\n        \"processDefinitionVersion\": 0,\n        \"variable\": {\n            \"name\": \"string\",\n            \"values\": [\n                \"string\"\n            ]\n        },\n        \"batchOperationId\": \"string\",\n        \"tenantId\": \"string\",\n        \"parentProcessInstanceKey\": \"string\"\n    },\n    \"sort\": [\n        {\n            \"field\": \"string\",\n            \"order\": \"asc\"\n        }\n    ],\n    \"page\": {\n        \"from\": 0,\n        \"limit\": 0,\n        \"searchAfter\": [\n            {}\n        ],\n        \"searchBefore\": [\n            {}\n        ]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/process-instances/search",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"process-instances",
+								"search"
+							]
+						},
+						"description": "Search for process instances based on given criteria.\n\n**Schema**\n\n**page** object\n\n**totalItems** int64\n\n**firstSortValues** object\\[\\]\n\n**lastSortValues** object\\[\\]\n\n**items** object\\[\\]\n\nArray \\[\n\n**key** int64\n\n**processDefinitionName** string\n\nThe process name.\n\n**processDefinitionVersion** int32\n\n**bpmnProcessId** string\n\n**parentKey** int64\n\n**parentFlowNodeInstanceKey** int64\n\n**startDate** date-time\n\n**endDate** date-time\n\n**state** string\n\n**Possible values:** \\[`ACTIVE`, `INCIDENT`, `COMPLETED`, `CANCELED`, `UNKNOWN`, `UNSPECIFIED`\\]\n\n**incident** boolean\n\n**hasActiveOperation** boolean\n\n**processDefinitionKey** int64\n\n**tenantId** string\n\n**rootInstanceId** string\n\n**operations** object\\[\\]\n\n**callHierarchy** object\\[\\]\n\n\\]"
+					},
+					"response": [
+						{
+							"name": "QueryProcessInstancesResponse",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n        \"running\": true,\n        \"active\": true,\n        \"finished\": true,\n        \"completed\": true\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{camundaApiBaseUrl}}/process-instances/search",
+									"host": [
+										"{{camundaApiBaseUrl}}"
+									],
+									"path": [
+										"process-instances",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 12 May 2025 13:32:08 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"items\": [\n        {\n            \"key\": \"2251799813687399\",\n            \"processDefinitionKey\": \"2251799813687152\",\n            \"processDefinitionName\": \"simple_process\",\n            \"processDefinitionVersion\": 1,\n            \"bpmnProcessId\": \"simple_process\",\n            \"startDate\": \"2025-05-12T09:06:54.274+0000\",\n            \"endDate\": \"2025-05-12T13:25:40.339+0000\",\n            \"state\": \"COMPLETED\",\n            \"incident\": false,\n            \"tenantId\": \"<default>\"\n        },\n        {\n            \"key\": \"2251799813689106\",\n            \"processDefinitionKey\": \"2251799813689085\",\n            \"processDefinitionName\": \"simple_process\",\n            \"processDefinitionVersion\": 2,\n            \"bpmnProcessId\": \"simple_process\",\n            \"startDate\": \"2025-05-12T09:33:36.836+0000\",\n            \"state\": \"ACTIVE\",\n            \"incident\": false,\n            \"tenantId\": \"<default>\"\n        }\n    ],\n    \"page\": {\n        \"totalItems\": 2,\n        \"firstSortValues\": [],\n        \"lastSortValues\": [\n            2251799813689106\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create process instance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"processDefinitionKey\": \"string\",\n    \"processDefinitionId\": \"string\",\n    \"processDefinitionVersion\": -1,\n    \"variables\": {},\n    \"tenantId\": \"string\",\n    \"operationReference\": 0,\n    \"startInstructions\": [\n        {\n            \"elementId\": \"string\"\n        }\n    ],\n    \"awaitCompletion\": false,\n    \"fetchVariables\": [\n        \"string\"\n    ],\n    \"requestTimeout\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/process-instances",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"process-instances"
+							]
+						},
+						"description": "Creates and starts an instance of the specified process. The process definition to use to create the instance can be specified either using its unique key (as returned by Deploy resources), or using the BPMN process ID and a version.\n\nWaits for the completion of the process instance before returning a result when awaitCompletion is enabled.\n\n**Schema**\n\n**processDefinitionKey** int64\n\nThe key of the process definition which was used to create the process instance.\n\n**processDefinitionId** string\n\nThe BPMN process ID of the process definition which was used to create the process. instance\n\n**processDefinitionVersion** int32\n\nThe version of the process definition which was used to create the process instance.\n\n**processInstanceKey** int64\n\nThe unique identifier of the created process instance; to be used wherever a request needs a process instance key (e.g. CancelProcessInstanceRequest).\n\n**tenantId** string\n\nThe tenant ID of the created process instance.\n\n**variables** object\n\nAll the variables visible in the root scope.\n\n**property name**\\* any\n\nAdditional properties allowed."
+					},
+					"response": [
+						{
+							"name": "CreateProcessInstanceResponse",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"processDefinitionId\": \"simple_process\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{camundaApiBaseUrl}}/process-instances",
+									"host": [
+										"{{camundaApiBaseUrl}}"
+									],
+									"path": [
+										"process-instances"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 12 May 2025 09:06:54 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"processDefinitionKey\": \"2251799813687152\",\n    \"processInstanceKey\": \"2251799813687399\",\n    \"processDefinitionId\": \"simple_process\",\n    \"processDefinitionVersion\": 1,\n    \"tenantId\": \"<default>\",\n    \"variables\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "Migrate process instance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"targetProcessDefinitionKey\": 0,\n  \"mappingInstructions\": [\n    {\n      \"sourceElementId\": \"string\",\n      \"targetElementId\": \"string\"\n    }\n  ],\n  \"operationReference\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/process-instances/:processInstanceKey/migration",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"process-instances",
+								":processInstanceKey",
+								"migration"
+							],
+							"variable": [
+								{
+									"key": "processInstanceKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Migrates a process instance to a new process definition. This request can contain multiple mapping instructions to define mapping between the active process instance's elements and target process definition elements.\n\nUse this to upgrade a process instance to a new version of a process or to a different process definition, e.g. to keep your running instances up-to-date with the latest process improvements."
+					},
+					"response": []
+				},
+				{
+					"name": "Modify process instance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"activateInstructions\": [\n    {\n      \"elementId\": \"string\",\n      \"ancestorElementInstanceKey\": -1,\n      \"variableInstructions\": [\n        {\n          \"variables\": {},\n          \"scopeId\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"terminateInstructions\": [\n    {\n      \"elementInstanceKey\": 0\n    }\n  ],\n  \"operationReference\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/process-instances/:processInstanceKey/modification",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"process-instances",
+								":processInstanceKey",
+								"modification"
+							],
+							"variable": [
+								{
+									"key": "processInstanceKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Modifies a running process instance. This request can contain multiple instructions to activate an element of the process or to terminate an active instance of an element.\n\nUse this to repair a process instance that is stuck on an element or took an unintended path. For example, because an external system is not available or doesn't respond as expected."
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel process instance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operationReference\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/process-instances/:processInstanceKey/cancellation",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"process-instances",
+								":processInstanceKey",
+								"cancellation"
+							],
+							"variable": [
+								{
+									"key": "processInstanceKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Cancels a running process instance. As a cancelation includes more than just the removal of the process instance resource, the cancelation resource must be posted."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Resource",
+			"item": [
+				{
+					"name": "Deploy resources",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/deployments",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"deployments"
+							]
+						},
+						"description": "Deploys one or more resources (e.g. processes, decision models, or forms). This is an atomic call, i.e. either all resources are deployed or none of them are.\n\n**Schema**\n\n**deploymentKey** int64\n\nThe unique key identifying the deployment.\n\n**deployments** object\\[\\]\n\nArray \\[\n\n**processDefinition** object\n\n**decisionDefinition** object\n\n**decisionRequirements** object\n\n**form** object\n\n\\]\n\n**tenantId** string"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete resource",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operationReference\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/resources/:resourceKey/deletion",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"resources",
+								":resourceKey",
+								"deletion"
+							],
+							"variable": [
+								{
+									"key": "resourceKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Deletes a deployed resource. This can be a process definition, decision requirements definition, or form definition deployed using the deploy resources endpoint. Specify the resource you want to delete in the `resourceKey` parameter."
+					},
+					"response": []
+				},
+				{
+					"name": "Get resource",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/resources/:resourceKey",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"resources",
+								":resourceKey"
+							],
+							"variable": [
+								{
+									"key": "resourceKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Returns a deployed resource."
+					},
+					"response": []
+				},
+				{
+					"name": "Get resource content",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/resources/:resourceKey/content",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"resources",
+								":resourceKey",
+								"content"
+							],
+							"variable": [
+								{
+									"key": "resourceKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Returns the content of a deployed resource."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Signal",
+			"item": [
+				{
+					"name": "Broadcast signal",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"signalName\": \"string\",\n  \"variables\": {},\n  \"tenantId\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/signals/broadcast",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"signals",
+								"broadcast"
+							]
+						},
+						"description": "Broadcasts a signal.\n\n**Schema**\n\n**signalKey** int64\n\nThe unique ID of the signal that was broadcast.\n\n**tenantId** string\n\nThe tenant ID of the signal that was broadcast."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Query users (alpha)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"filter\": {\n    \"username\": \"string\",\n    \"name\": \"string\",\n    \"email\": \"string\"\n  },\n  \"sort\": [\n    {\n      \"field\": \"string\",\n      \"order\": \"asc\"\n    }\n  ],\n  \"page\": {\n    \"from\": 0,\n    \"limit\": 0,\n    \"searchAfter\": [\n      {}\n    ],\n    \"searchBefore\": [\n      {}\n    ]\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/users/search",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"users",
+								"search"
+							]
+						},
+						"description": "Search for users based on given criteria.\n\n**Schema**\n\n**page** object\n\n**totalItems** int64\n\n**firstSortValues** object\\[\\]\n\n**lastSortValues** object\\[\\]\n\n**items** object\\[\\]\n\nArray \\[\n\n**id** int64\n\n**key** int64\n\n**username** string\n\n**name** string\n\n**email** string\n\n\\]"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User task",
+			"item": [
+				{
+					"name": "Complete a user task",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"variables\": {},\n  \"action\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/user-tasks/:userTaskKey/completion",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"user-tasks",
+								":userTaskKey",
+								"completion"
+							],
+							"variable": [
+								{
+									"key": "userTaskKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Completes a user task with the given key."
+					},
+					"response": [
+						{
+							"name": "CompleteUserTaskResponse",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{camundaApiBaseUrl}}/user-tasks/:userTaskKey/completion",
+									"host": [
+										"{{camundaApiBaseUrl}}"
+									],
+									"path": [
+										"user-tasks",
+										":userTaskKey",
+										"completion"
+									],
+									"variable": [
+										{
+											"key": "userTaskKey",
+											"value": "2251799813687404"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 May 2025 09:32:04 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Assign a user task",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"assignee\": \"string\",\n  \"allowOverride\": true,\n  \"action\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/user-tasks/:userTaskKey/assignment",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"user-tasks",
+								":userTaskKey",
+								"assignment"
+							],
+							"variable": [
+								{
+									"key": "userTaskKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Assigns a user task with the given key to the given assignee."
+					},
+					"response": [
+						{
+							"name": "AssignUserTaskResponse",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"assignee\": \"demo\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{camundaApiBaseUrl}}/user-tasks/:userTaskKey/assignment",
+									"host": [
+										"{{camundaApiBaseUrl}}"
+									],
+									"path": [
+										"user-tasks",
+										":userTaskKey",
+										"assignment"
+									],
+									"variable": [
+										{
+											"key": "userTaskKey",
+											"value": "2251799813687404"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 May 2025 09:29:29 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Update a user task",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"changeset\": {\n    \"dueDate\": \"2024-06-17T05:41:22.718Z\",\n    \"followUpDate\": \"2024-06-17T05:41:22.718Z\",\n    \"candidateUsers\": [\n      \"string\"\n    ],\n    \"candidateGroups\": [\n      \"string\"\n    ]\n  },\n  \"action\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/user-tasks/:userTaskKey",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"user-tasks",
+								":userTaskKey"
+							],
+							"variable": [
+								{
+									"key": "userTaskKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Update a user task with the given key."
+					},
+					"response": []
+				},
+				{
+					"name": "Unassign a user task",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/user-tasks/:userTaskKey/assignee",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"user-tasks",
+								":userTaskKey",
+								"assignee"
+							],
+							"variable": [
+								{
+									"key": "userTaskKey",
+									"value": ""
+								}
+							]
+						},
+						"description": "Removes the assignee of a task with the given key."
+					},
+					"response": [
+						{
+							"name": "UnassignUserTaskResponse",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{camundaApiBaseUrl}}/user-tasks/:userTaskKey/assignee",
+									"host": [
+										"{{camundaApiBaseUrl}}"
+									],
+									"path": [
+										"user-tasks",
+										":userTaskKey",
+										"assignee"
+									],
+									"variable": [
+										{
+											"key": "userTaskKey",
+											"value": "2251799813688929"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 May 2025 13:23:34 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Query user tasks (alpha)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"filter\": {\n        \"state\": \"string\",\n        \"assignee\": \"string\",\n        \"elementId\": \"string\",\n        \"candidateGroup\": \"string\",\n        \"candidateUser\": \"string\",\n        \"tenantIds\": \"string\",\n        \"processDefinitionId\": \"string\",\n        \"key\": \"string\",\n        \"processDefinitionKey\": \"string\",\n        \"processInstanceKey\": \"string\"\n    },\n    \"sort\": [\n        {\n            \"field\": \"string\",\n            \"order\": \"asc\"\n        }\n    ],\n    \"page\": {\n        \"from\": 0,\n        \"limit\": 0,\n        \"searchAfter\": [\n            {}\n        ],\n        \"searchBefore\": [\n            {}\n        ]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{camundaApiBaseUrl}}/user-tasks/search",
+							"host": [
+								"{{camundaApiBaseUrl}}"
+							],
+							"path": [
+								"user-tasks",
+								"search"
+							]
+						},
+						"description": "Search for user tasks based on given criteria.\n\n**Schema**\n\n**page** object\n\n**totalItems** int64\n\n**firstSortValues** object\\[\\]\n\n**lastSortValues** object\\[\\]\n\n**items** object\\[\\]\n\nArray \\[\n\n**key** int64\n\n**state** string\n\n**assignee** string\n\n**elementId** string\n\n**elementInstanceKey** int64\n\n**candidateGroup** string\\[\\]\n\n**candidateUser** string\\[\\]\n\n**processDefinitionId** string\n\n**processDefinitionKey** int64\n\n**processInstanceKey** int64\n\n**formKey** int64\n\n**creationDate** date-time\n\n**completionDate** date-time\n\n**followUpDate** date-time\n\n**dueDate** date-time\n\n**tenantIds** string\n\n**externalFormReference** string\n\n**processDefinitionVersion** int32\n\n**customHeaders** object\n\n**priority** integer\n\n**Possible values:** `<= 100`\n\n**Default value:** `50`\n\nThe priority of a user task. The higher the value the higher the priority.\n\n\\]"
+					},
+					"response": [
+						{
+							"name": "QueryUserTasksResponse",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n        \"key\": \"2251799813689111\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{camundaApiBaseUrl}}/user-tasks/search",
+									"host": [
+										"{{camundaApiBaseUrl}}"
+									],
+									"path": [
+										"user-tasks",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 12 May 2025 09:36:00 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"items\": [\n        {\n            \"key\": \"2251799813689111\",\n            \"elementInstanceKey\": \"2251799813689110\",\n            \"processDefinitionKey\": \"2251799813689085\",\n            \"processInstanceKey\": \"2251799813689106\",\n            \"state\": \"CREATED\",\n            \"elementId\": \"Activity_1e70p2s\",\n            \"processDefinitionId\": \"simple_process\",\n            \"creationDate\": \"2025-05-12T09:33:36.836+0000\",\n            \"tenantIds\": \"<default>\",\n            \"externalFormReference\": \"Task1Form\",\n            \"processDefinitionVersion\": 2,\n            \"customHeaders\": {},\n            \"priority\": 50\n        }\n    ],\n    \"page\": {\n        \"totalItems\": 1,\n        \"firstSortValues\": [],\n        \"lastSortValues\": [\n            2251799813689111\n        ]\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"// --- Variables to configure in collection variables ---",
+					"const baseUrl     = pm.collectionVariables.get(\"baseUrl\");      // e.g. http://localhost:8080",
+					"const username    = pm.collectionVariables.get(\"username\");     // e.g. demo",
+					"const password    = pm.collectionVariables.get(\"password\");     // e.g. demo",
+					"",
+					"// Variables used to store cookie and expiry",
+					"const cookie      = pm.collectionVariables.get(\"sessionCookie\");",
+					"const cookieExp   = pm.collectionVariables.get(\"cookieExpiry\");",
+					"",
+					"// If we already have a valid session cookie, reuse it",
+					"if (cookie && cookieExp && Date.now() < parseInt(cookieExp)) {",
+					"    pm.request.headers.add({ key: \"Cookie\", value: cookie });",
+					"} else {",
+					"    // No valid cookie—perform login",
+					"    pm.sendRequest({",
+					"        url: `${baseUrl.replace(/\\/$/, \"\")}/api/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`,",
+					"        method: \"POST\"",
+					"    }, (err, res) => {",
+					"        if (err || !res) {",
+					"            console.error(\"Login failed:\", err);",
+					"            return;",
+					"        }",
+					"",
+					"        // Get full Cookie header value",
+					"        const setCookie = res.headers.get(\"Set-Cookie\");",
+					"        if (!setCookie) {",
+					"            console.error(\"No Set-Cookie header returned during login\");",
+					"            return;",
+					"        }",
+					"",
+					"        // Store the raw Cookie header string (e.g., \"JSESSIONID=abc123; Path=/; HttpOnly\")",
+					"        pm.collectionVariables.set(\"sessionCookie\", setCookie);",
+					"        // Set expiry to, say, 25 minutes from now (adjust as needed)",
+					"        pm.collectionVariables.set(\"cookieExpiry\", (Date.now() + 25*60*1000).toString());",
+					"",
+					"        // Add Cookie header now",
+					"        pm.request.headers.add({ key: \"Cookie\", value: setCookie });",
+					"    });",
+					"}",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
+		},
+		{
+			"key": "username",
+			"value": "demo",
+			"type": "string",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
+		},
+		{
+			"key": "password",
+			"value": "demo",
+			"type": "string",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
+		},
+		{
+			"key": "sessionCookie",
+			"value": ""
+		},
+		{
+			"key": "cookieExpiry",
+			"value": ""
+		}
+	]
+}
