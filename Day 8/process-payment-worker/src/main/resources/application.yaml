@@ -4,6 +4,6 @@ camunda:
       enabled: false
     zeebe:
       security:
-        palintext: true
+        plaintext: true
       grpc-address: http://localhost:26500
       rest-address: http://localhost:8088
